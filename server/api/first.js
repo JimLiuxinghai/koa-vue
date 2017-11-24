@@ -23,4 +23,16 @@ router.get('/detail/:id', async (ctx, next) => {
 		console.log(err)
 	}
 })
+router.get('/rest', async (ctx, next) => {
+	try {
+		let url = `http://api.map.baidu.com/place/v2/search?query=${encodeURIComponent('餐馆')}&location=39.915,116.404&radius=10000&output=json&ak=YgjgBL2HU88P6u6jWnjLQQpeHpgVnTfA`;
+		console.log(url)
+		let response = await axios(url);
+		console.log(response.data)
+		ctx.body = response.data;
+	}
+	catch (err) {
+
+	}
+})
 export default router
