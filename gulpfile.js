@@ -38,6 +38,10 @@ gulp.task('webpack:prod', function() {
         console.log('## 代码编译完成');
     })
 })
+gulp.task('copy', function() {
+    gulp.src(path.join(__dirname, '/src/views/login.html'))
+            .pipe(gulp.dest(path.join(__dirname, '/build/views')));
+})
 //监控文件改动
 gulp.task('watch', function() {
     gulp.watch(['./src/*.*', './src/**/*.*'], ['webpack']);
@@ -61,13 +65,15 @@ gulp.task('default', function() {
     'clear',
     'webpack',
     'develop',
-    'watch'
+    'watch',
+    'copy'
   );
 });
 
 gulp.task('build', function() {
     runSequence(
       'clear',
-      'webpack:prod'
+      'webpack:prod',
+      'copy'
     );
 })
