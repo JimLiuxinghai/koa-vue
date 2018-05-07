@@ -1,13 +1,13 @@
 {
   "apps": [
     {
-      "name": "koa2-demo",
-      "cwd": "/home/liuxinghai/project/koa2-router-demo",
+      "name": "koa2-vue",
+      "cwd": "/home/liuxinghai/person/koa-vue",
       "script": "./app.js",
       "exec_mode": "cluster",
       "node_args": "--harmony",
       "watch": [
-        "server", "config"
+        "server", "config", "src/views"
       ],
       "env": {
         "NODE_ENV": "development.lxh"

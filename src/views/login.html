@@ -3,8 +3,35 @@
   <head>
     <meta charset="utf-8">
     <title>koa-vue</title>
+    <script src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
   </head>
   <body>
     <h1>login</h1>
+    <input type="text" class="username">
+    <input type="password" class="password">
+    <button class="button">点击</button>
+    <script>
+    	$(function() {
+    		$('.button').click(function() {
+    			var name = $('.username').val()
+    			var pass = $('.password').val()
+    			$.ajax({
+    				type: 'post',
+    				url: '/api/login',
+    				data: {
+    					name: name,
+    					pass: pass
+    				},
+    				success: function(res) {
+    					console.log(res)
+    					if(res.status.code == 200) {
+    						window.location.href = "/"
+    					}
+    				}
+    			})
+    		})
+    		
+    	})
+    </script>
   </body>
 </html>
