@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import vueResource from 'vue-resource';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
+import './assets/css/common.less'
+import './assets/css/link.less'
 Vue.config.debug = true;
 
 Vue.use(VueRouter);
 Vue.use(vueResource);
-Vue.use(ElementUI);
+Vue.use(iView);
 
 //无比关键
 Vue.http.options.emulateJSON = true;

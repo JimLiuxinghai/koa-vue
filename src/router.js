@@ -6,7 +6,7 @@ export default {
     base: __dirname,
     routes: [
       {
-          path: '/list', 
+          path: '/dealer', 
       	  component: List
       },
       {

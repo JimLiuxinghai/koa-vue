@@ -1,38 +1,19 @@
-<style lang="less" scoped>
-	.el-aside {
-       background-color: #D3DCE6;
-       color: #333;
-       text-align: center;
-       line-height: 200px;
-     }
-     
-     .el-main {
-       background-color: #E9EEF3;
-       color: #333;
-       text-align: center;
-       line-height: 160px;
-     }
-</style>
 <template>
-    <el-container>
-      <el-aside width="200px">Aside</el-aside>
-      <el-main>
-          <router-view></router-view>
-      </el-main>
-    </el-container>
+  <div id="app">
+    <div class="header"></div>
+    <div class="left">
+      <Navigation></Navigation>
+    </div>
+    <div class="con">
+      <router-view></router-view>
+    </div>
+  </div>
 </template>
+
 <script>
-    export default {
-        data () {
-        	let height = window.innerHeight;
-            return {
-                height: height
-            }
-        },
-        methods: {
-            switchMenu (index) {
-            	this.itemActive = index;
-            }
-        }
-    }
+  import Navigation from './components/menu.vue'
+  export default {
+    name: 'app',
+    components: {Navigation:Navigation}
+  }
 </script>
