@@ -64,7 +64,6 @@ gulp.task('default', function() {
   runSequence(
     'clear',
     'webpack',
-    'develop',
     'watch',
     'copy'
   );

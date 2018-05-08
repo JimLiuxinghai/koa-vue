@@ -1,13 +1,25 @@
 <style lang="less" scoped>
-	.main {
-        max-width: 750px;
-        margin: 0 auto;
-    }
+	.el-aside {
+       background-color: #D3DCE6;
+       color: #333;
+       text-align: center;
+       line-height: 200px;
+     }
+     
+     .el-main {
+       background-color: #E9EEF3;
+       color: #333;
+       text-align: center;
+       line-height: 160px;
+     }
 </style>
 <template>
-    <div class="main">
-        <router-view></router-view>
-    </div>
+    <el-container>
+      <el-aside width="200px">Aside</el-aside>
+      <el-main>
+          <router-view></router-view>
+      </el-main>
+    </el-container>
 </template>
 <script>
     export default {
