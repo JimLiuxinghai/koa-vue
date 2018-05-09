@@ -87,7 +87,7 @@
   export default {
     mounted (){
       this.activeIndex = this.$route.name;
-      this.getData()
+      //this.getData()
 
     },
     methods: {
