@@ -44,7 +44,7 @@ gulp.task('copy', function() {
 })
 //监控文件改动
 gulp.task('watch', function() {
-    gulp.watch(['./src/*.*', './src/**/*.*'], ['webpack', 'copy']);
+    gulp.watch(['./src/*.*', './src/**/*.*'], ['webpack']);
 })
 //开发重启node服务
 gulp.task('develop', function (){

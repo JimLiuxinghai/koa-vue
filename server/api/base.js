@@ -10,7 +10,7 @@ export async function menu (ctx, config = {}) {
 			url: '/actions/getUserMenus?loginId=' + id
 		}
 		let data = await request(ctx, config)
-		console.log(data.data)
+		
 		let ok = util.errorModal('ERR_OK')
 		ok.data = data.data
 		ctx.body = ok
