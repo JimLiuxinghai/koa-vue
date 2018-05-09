@@ -20,11 +20,109 @@ export async function menu (ctx, config = {}) {
 		ctx.body = ok
 	}
 }
-export async function shop (ctx, config = {}) {
+export async function roles (ctx, config = {}) {
 	try {
 		let query = ctx.query
+		let id = ctx.session.id
 		let config = {
-			url: '/actions/getSetRoles?loginId=1'
+			url: '/actions/getSetRoles?loginId=' + id
+		}
+		let data = await request(ctx, config)
+		let ok = util.errorModal('ERR_OK')
+		ok.data = data.data
+		ctx.body = ok
+	}
+	catch (e) {
+		console.log(e)
+		let ok = util.errorModal('ERR_SYSTEM_ERROR')
+		ctx.body = ok
+	}
+}
+export async function distributors (ctx, config = {}) {
+	try {
+		let query = ctx.query
+		let id = ctx.session.id
+		let config = {
+			url: '/actions/getDistributors?loginId=' + id
+		}
+		let data = await request(ctx, config)
+		let ok = util.errorModal('ERR_OK')
+		ok.data = data.data
+		ctx.body = ok
+	}
+	catch (e) {
+		console.log(e)
+		let ok = util.errorModal('ERR_SYSTEM_ERROR')
+		ctx.body = ok
+	}
+}
+export async function adddis (ctx, config = {}) {
+	try {
+		let query = ctx.query
+		let id = ctx.session.id
+		let config = {
+			url: '/actions/addDistributor?loginId=' + id,
+			data: query
+		}
+		let data = await request(ctx, config)
+		let ok = util.errorModal('ERR_OK')
+		ok.data = data.data
+		ctx.body = ok
+	}
+	catch (e) {
+		console.log(e)
+		let ok = util.errorModal('ERR_SYSTEM_ERROR')
+		ctx.body = ok
+	}
+}
+export async function deldis (ctx, config = {}) {
+	try {
+		let query = ctx.query
+		let id = ctx.session.id
+		let url = `/actions/delDistri/${query.id}?loginId=${id}`
+		let config = {
+			url: url
+		}
+		let data = await request(ctx, config)
+		let ok = util.errorModal('ERR_OK')
+		ok.data = data.data
+		ctx.body = ok
+	}
+	catch (e) {
+		console.log(e)
+		let ok = util.errorModal('ERR_SYSTEM_ERROR')
+		ctx.body = ok
+	}
+}
+export async function actdis (ctx, config = {}) {
+	try {
+		let query = ctx.query
+		let id = ctx.session.id
+		let url = `/actions/actDistri?loginId=${id}`
+		let config = {
+			url: url,
+			data: query
+		}
+		let data = await request(ctx, config)
+		let ok = util.errorModal('ERR_OK')
+		ok.data = data.data
+		ctx.body = ok
+	}
+	catch (e) {
+		console.log(e)
+		let ok = util.errorModal('ERR_SYSTEM_ERROR')
+		ctx.body = ok
+	}
+}
+
+export async function addChecker (ctx, config = {}) {
+	try {
+		let query = ctx.query
+		let id = ctx.session.id
+		let url = `/actions/saveChecker?loginId=${id}`
+		let config = {
+			url: url,
+			data: query
 		}
 		let data = await request(ctx, config)
 		let ok = util.errorModal('ERR_OK')
@@ -39,7 +137,11 @@ export async function shop (ctx, config = {}) {
 }
 module.exports = {
     'get /': menu,
-    'get /shop': shop
+    'get /roles': roles,
+    'get /distributor': distributors,
+    'post /adddis': adddis,
+    'post /deldis': deldis,
+    'post /addChecker': addChecker
 }
 
 

@@ -17,7 +17,7 @@ export async function login (ctx, config = {}) {
 		let ok = null
 		if(reqData.data.retCode == 0) {
 			ctx.session.isLogin = true
-			console.log(ctx.session)
+			ctx.session.id = reqData.data.data.id
 			ok = util.errorModal('ERR_OK')
 		}
 		else {
