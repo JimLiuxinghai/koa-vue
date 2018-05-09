@@ -5,8 +5,9 @@ import { request } from '../service/request'
 export async function menu (ctx, config = {}) {
 	try {
 		let query = ctx.query
+		let id = ctx.session.id
 		let config = {
-			url: '/actions/getUserMenus?loginId=1'
+			url: '/actions/getUserMenus?loginId=' + id
 		}
 		let data = await request(ctx, config)
 		console.log(data.data)
@@ -23,6 +24,7 @@ export async function menu (ctx, config = {}) {
 export async function roles (ctx, config = {}) {
 	try {
 		let query = ctx.query
+
 		let id = ctx.session.id
 		let config = {
 			url: '/actions/getSetRoles?loginId=' + id

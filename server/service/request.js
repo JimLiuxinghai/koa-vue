@@ -4,6 +4,7 @@ import axios from 'axios'
 */
 export async function request (ctx, config = {}) {
 	let host = ENV_CONFIG.host
+	console.log(host + config.url)
 	let data = await axios({
 		method: config.method || 'post',
 		url: host + config.url,
