@@ -46,7 +46,7 @@ let cookie = {
 // 配置session中间件
 app.use(session({
   key: 'USER_SID',
-  //store: new MysqlStore(ENV_CONFIG.db.mysql),
+  store: new MysqlStore(ENV_CONFIG.db.mysql),
   cookie: cookie
 }))
 // 配置控制台日志中间件app.use(convert(koaLogger()))
