@@ -40,12 +40,24 @@ export async function roles (ctx, config = {}) {
 		ctx.body = ok
 	}
 }
+//经销商
 export async function distributors (ctx, config = {}) {
 	try {
 		let query = ctx.query
+		let param = {
+			userInfo: {
+				phone: query.phone,
+				rate: ''
+			},
+			page: {
+				pageIndex: query.page,
+				pageSize: 10
+			}
+		}
 		let id = ctx.session.id
 		let config = {
-			url: '/actions/getDistributors?loginId=' + id
+			url: '/actions/getDistributors?loginId=' + id,
+			data: param
 		}
 		let data = await request(ctx, config)
 		let ok = util.errorModal('ERR_OK')

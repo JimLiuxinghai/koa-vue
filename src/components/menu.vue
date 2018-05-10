@@ -40,7 +40,6 @@
   import { menu } from '../data/data'
   export default {
     mounted (){
-      console.log(this.$route.name)
       this.activeIndex = this.$route.name;
       this.getData()
 
@@ -48,9 +47,7 @@
     methods: {
       async getData() {
         let data = await menu()
-        console.log(data.data, '****&&&&&')
         this.menuList = data.data.data
-        console.log(this.menuList, '***')
       }
     },
     data () {
