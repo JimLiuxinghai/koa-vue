@@ -6,6 +6,7 @@ const del = require('del');
 const nodemon = require('gulp-nodemon');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpackConfig = require('./webpack.config');
+console.log(webpackConfig)
 const _ = require('lodash');
 //启动前删除build目录
 const DEBUG = process.env.NODE_ENV == 'development';
@@ -22,18 +23,20 @@ gulp.task('webpack', function() {
         publicPath: '../static/'
     };
     webpack(myConfig, function (err, state) {
-        console.log('## 代码编译完成');
+        console.log('## 代码编译完成', state.errors);
     })
 })
 
 gulp.task('webpack:prod', function() {
     console.log('## 代码编译开始');
-    var myConfig = Object.create(webpackConfig);
+    var myConfig = webpackConfig;
+    
     myConfig.output = {
         path: path.join(__dirname, '/build/static/'),
         filename: '[name].[chunkhash:6].js',
         publicPath: '../static/'
     };
+    console.log(myConfig)
     webpack(myConfig, function (err, state) {
         console.log('## 代码编译完成');
     })

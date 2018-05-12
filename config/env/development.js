@@ -1,6 +1,6 @@
 export default {
     port: 9058,
-    host: 'https://www.mwwae.top',
+    host: 'http://123.206.63.144:7998',
     db: {
     	mysql: {
     		database: 'market_db',
