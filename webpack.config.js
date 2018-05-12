@@ -74,8 +74,12 @@ if (process.env.NODE_ENV === 'production') {
             NODE_ENV: '"production"'
         }
     }),
-    new webpack.optimize.UglifyJsPlugin({compress: {warnings: VERBOSE}}),
+    new webpack.optimize.UglifyJsPlugin({
+        sourceMap: true,
+        compress: {
+            warnings: false
+        }
+    }),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.optimize.CommonsChunkPlugin()
   ])
 }
