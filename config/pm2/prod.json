@@ -1,8 +1,8 @@
-{
+s{
   "apps": [
     {
-      "name": "Analytics",
-      "cwd": "/home/highnode/project/analytics",
+      "name": "manage",
+      "cwd": "/home/market/fe/koa-vue",
       "script": "./app.js",
       "exec_mode": "cluster",
       "node_args": "--harmony",
@@ -10,9 +10,9 @@
         "NODE_ENV": "production"
       },
       "log_date_format": "YYYY-MM-DD HH:mm Z",
-      "error_file": "/home/highnode/logs/pm2/error.log",
-      "out_file": "/home/highnode/logs/pm2/out.log",
-      "pid_file": "/home/highnode/logs/pm2/out.log",
+      "error_file": "/home/market/fe/logs/pm2/error.log",
+      "out_file": "/home/market/fe/logs/pm2/out.log",
+      "pid_file": "/home/market/fe/logs/pm2/out.log",
       "max_memory_restart": "400M",
       "instances": "2"
     }
