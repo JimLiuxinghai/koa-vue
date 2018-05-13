@@ -3,6 +3,7 @@ import Koa from 'koa'
 import convert from 'koa-convert'
 import views from 'koa-views'
 import koaStatic from 'koa-static'
+import staticCache from 'koa-static-cache'
 import bodyParser from 'koa-bodyparser'
 import koaLogger from 'koa-logger'
 import session from 'koa-session-minimal'
@@ -60,8 +61,13 @@ app.use(bodyParser())
 
 // 配置静态资源加载中间件
 app.use(convert(koaStatic(
-  path.join(__dirname , './../build/')
+  path.join(__dirname , './../build/'), {
+    maxage: 30 * 24 * 60 * 60 * 1000,
+    gzip: true
+  }
 )))
+
+
 
 // 配置服务端模板渲染引擎中间件
 app.use(views(path.join(__dirname, './../build/views/'), {
