@@ -46,12 +46,12 @@ export async function distributors (ctx, config = {}) {
 		let query = ctx.query
 		let param = {
 			userInfo: {
-				phone: query.phone,
+				phone: query.phone || '',
 				rate: ''
 			},
 			page: {
 				pageIndex: query.page,
-				pageSize: 10
+				pageSize: query.pageSize || 10
 			}
 		}
 		let id = ctx.session.id
@@ -72,12 +72,19 @@ export async function distributors (ctx, config = {}) {
 }
 export async function adddis (ctx, config = {}) {
 	try {
-		let query = ctx.query
+		let query = ctx.request.body;
 		let id = ctx.session.id
 		let config = {
 			url: '/actions/addDistributor?loginId=' + id,
-			data: query
+			data: {
+				distrRole: query.distrRole,	
+				name: query.name,
+				password: query.password,	
+				phone: query.phone,
+				rate: query.rate
+			}
 		}
+		console.log(config)
 		let data = await request(ctx, config)
 		let ok = util.errorModal('ERR_OK')
 		ok.data = data.data
@@ -91,7 +98,7 @@ export async function adddis (ctx, config = {}) {
 }
 export async function deldis (ctx, config = {}) {
 	try {
-		let query = ctx.query
+		let query = ctx.request.body
 		let id = ctx.session.id
 		let url = `/actions/delDistri/${query.id}?loginId=${id}`
 		let config = {
@@ -108,15 +115,21 @@ export async function deldis (ctx, config = {}) {
 		ctx.body = ok
 	}
 }
+//激活
 export async function actdis (ctx, config = {}) {
 	try {
-		let query = ctx.query
+		let query = ctx.request.body;
+
 		let id = ctx.session.id
 		let url = `/actions/actDistri?loginId=${id}`
 		let config = {
 			url: url,
-			data: query
+			data: {
+				id: query.id
+			}
 		}
+		console.log(config)
+
 		let data = await request(ctx, config)
 		let ok = util.errorModal('ERR_OK')
 		ok.data = data.data
@@ -155,6 +168,7 @@ module.exports = {
     'get /distributor': distributors,
     'post /adddis': adddis,
     'post /deldis': deldis,
+    'post /actdis': actdis,
     'post /addChecker': addChecker
 }
 

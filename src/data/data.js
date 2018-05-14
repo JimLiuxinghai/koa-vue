@@ -17,6 +17,11 @@ export async function adddis(config) {
 	return data.data
 }
 
+export async function actdis(config) {
+	let data = await axios.post('/api/base/actdis', config)
+	return data.data
+}
+
 export async function deldis(config) {
 	let data = await axios.post('/api/base/deldis', config)
 	return data.data

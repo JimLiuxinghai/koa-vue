@@ -6,9 +6,9 @@
         <div class="top">
             <div class="first">
                 <span>订单号:</span>
-                <Input v-model="orderNo" placeholder="订单号" style="width: 200px; margin-right: 40px;"></Input>
+                <Input v-model="orderNo" placeholder="订单号" style="width: 300px; margin-right: 40px;"></Input>
                 <span>核销状态:</span>
-                <Select v-model="checkStatus" style="width:200px">
+                <Select v-model="checkStatus" style="width:300px">
                     <Option v-for="item in stateArr" :value="item.key" :key="item.key">{{ item.name }}</Option>
                 </Select>
             </div>
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="inner">
-            <Table stripe border :columns="columns" :data="tableData"></Table>
+            <Table :loading="!loading" stripe border :columns="columns" :data="tableData"></Table>
             <Page  :current="page + 1" :total="total" @on-change="jump"></Page>
         </div>
     </div>
@@ -40,6 +40,7 @@
                 checkStatus: '',
                 orderDate: [],
                 checkDate: [],
+                disRole: [],
                 stateArr: [{
                     key: '1',
                     name: '待验证'
@@ -74,8 +75,45 @@
                     key: 'createdTime'
                 },{
                     title: '核销状态',
-                    key: 'checkStatus'
+                    key: 'checkStatus',
+                    render: (h, params) => {
+                        const stateConfig = {
+                            1: '待验证',
+                            2: '已验证',
+                            3: '已失效'
+                        }
+                        let text = stateConfig[params.row.checkStatus]
+                        console.log(text, '****')
+                        return h('div', [
+                             h('Button', {
+                                props: {
+                                    type: 'primary',
+                                    size: 'small'
+                                }
+                            }, text)
+                        ]);
+                    }
                 }, {
+                    title: '经销商',
+                    key: 'distributorId',
+                    render: (h, params) => {
+                        let text = ''
+                        this.disRole.forEach((item) => {
+                            if(params.row.id == item.distributorId) {
+                                text = item.name
+                            }
+                        })
+                        console.log(text)
+                        return h('div', [
+                             h('Button', {
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                }
+                            }, text)
+                        ]);
+                    }
+                },{
                     title: '核销时间',
                     key: 'checkDate'
                 }],
@@ -101,11 +139,14 @@
                 }
                 
                 let data = await list(param)
-                let disData = await distributor()
-                console.log(disData, '&&&&&&7')
+                let disData = await distributor({
+                    page: 0,
+                    pageSize: 1000
+                })
+                
+                this.disRole = disData.content
                 this.tableData = data.data.data.content
                 this.total = data.data.data.totalElements
-                console.log(data, '****')
                 
             },
             changeOrder(date) {

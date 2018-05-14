@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <div class="header">
+<!--     <div class="header">
       开封翰园碑林管理平台
-    </div>
+    </div> -->
     <div class="left">
       <Navigation></Navigation>
     </div>
