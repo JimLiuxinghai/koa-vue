@@ -53,7 +53,7 @@ export async function distributors (ctx, config = {}) {
 				rate: ''
 			},
 			page: {
-				pageIndex: query.page,
+				pageIndex: query.page || 0,
 				pageSize: query.pageSize || 10
 			}
 		}
@@ -146,7 +146,7 @@ export async function actdis (ctx, config = {}) {
 
 export async function addChecker (ctx, config = {}) {
 	try {
-		let query = ctx.query
+		let query = ctx.request.body;
 		let id = ctx.session.id
 		let url = `/actions/saveChecker?loginId=${id}`
 		let config = {
@@ -164,6 +164,51 @@ export async function addChecker (ctx, config = {}) {
 		ctx.body = ok
 	}
 }
+export async function ercode (ctx, config = {}) {
+	try {
+		let query = ctx.query
+		let id = ctx.session.id
+		let url = `/actions/miniQrCode?loginId=${id}`
+		let config = {
+			url: url,
+			data: {
+			    appId:"wxe31cf734e187f852",
+			    distributeId: id,
+			    params:{
+				 	path: "pages/index?disId=" + id,
+				    width: 430
+			    }
+			}
+		}
+		let data = await request(ctx, config)
+
+		if(data.data.retCode == 0) {
+			
+			let ok = util.errorModal('ERR_OK')
+			let user =  ctx.session.user
+			ok.data = {
+				id: ctx.session.id,
+				phone: user.phone,
+				name: user.name,
+				rate: user.rate,
+				status: user.status,
+				img: ENV_CONFIG.host + data.data.data + '.png',
+				imgUrl: ENV_CONFIG.host + data.data.data
+			}
+			ctx.body = ok
+		}
+		else {
+			let ok = util.errorModal('ERR_SYSTEM_ERROR')
+			ctx.body = ok
+		}
+		
+	}
+	catch (e) {
+		console.log(e)
+		let ok = util.errorModal('ERR_SYSTEM_ERROR')
+		ctx.body = ok
+	}
+}
 module.exports = {
     'get /': menu,
     'get /roles': roles,
@@ -171,7 +216,8 @@ module.exports = {
     'post /adddis': adddis,
     'post /deldis': deldis,
     'post /actdis': actdis,
-    'post /addChecker': addChecker
+    'post /addChecker': addChecker,
+    'get /ercode': ercode
 }
 
 

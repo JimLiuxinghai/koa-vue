@@ -28,7 +28,7 @@
 <template>
   <Menu theme="dark" width="auto" :class="menuitemClasses" :active-name="activeIndex">
     <router-link  v-for="(item, index) in menuList" :to="item.menuUrl">
-      <MenuItem :name="item.menuUrl">
+      <MenuItem :name="index">
         <Icon :type="item.menuFont"></Icon>
         {{item.menuName}}
       </MenuItem>
@@ -40,7 +40,8 @@
   import { menu } from '../data/data'
   export default {
     mounted (){
-      this.activeIndex = '#' + this.$route.path;
+      console.log(this.$route.name)
+      this.activeIndex = 0;
       console.log(this.activeIndex, 'active')
       this.getData()
 

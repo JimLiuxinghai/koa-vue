@@ -2,16 +2,32 @@
 	@import 'index.less';
 </style>
 <template>
-    <div class="dis">
+    <div class="person">
+
         <div class="inner">
-            <div class="name"></div>
-            <div class="phone"></div>
-            <div class="role"></div>
+            <div class="id">
+                <span>编号:</span> {{user.id}}
+            </div>
+            <div class="name">
+                 <span>名称:</span>{{user.name}}
+            </div>
+            <div class="phone">
+                <span>电话:</span>{{user.phone}}
+            </div>
+            <div class="rate">
+                <span>分成比例:</span>{{user.rate}}
+            </div>
+            <div class="img">
+                <img src="{{user.imgUrl}}">
+                <Button type="primary" @click="down">
+                    点击下载推广二维码
+                </Button>
+            </div>
         </div>
     </div>
 </template>
 <script>
-    import { distributor } from '../../data/data'
+    import { userinfo } from '../../data/data'
 
     export default {
         beforeMount () {
@@ -19,32 +35,22 @@
         },
         data () {
             return {
-                   
+                user: {},
+                url: ''
             }
         },
         methods: {
             async getData () {
-                let param = {
-                    person: true
+                let data = await userinfo()
+                if(data.status.code == 200) {
+                    this.user = data.data 
+                    this.url = data.data.imgUrl
+                    console.log(this.url)  
                 }
-                let data = await distributor(param)
-                console.log(data)
-                this.loading = true
-                this.tableData = data.content
-                this.total = data.totalElements
-                
             },
-            jump (param) {
-                this.page = param - 1
-                this.loading = false
-                this.getData()
-            },
-            async addData () {
-
+            async down () {
+                window.open(this.user.img,"_blank"); 
             }
-        },
-        components: {
-            Loading: Loading
         }
     }
 </script>

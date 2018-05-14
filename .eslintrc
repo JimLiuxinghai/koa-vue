@@ -49,7 +49,6 @@
   },
   "extends": "eslint:recommended",
   "ecmaFeatures": {
-    "jsx": true,
     "modules": true,
     "module":  true
   }

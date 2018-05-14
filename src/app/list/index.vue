@@ -93,6 +93,22 @@
                     align: 'center',
                     render: (h, params) => {
                         console.log(params)
+                        let distrRole = params.row.distrRole
+                        if(distrRole !== 12) {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.down(params)
+                                        }
+                                    }
+                                }, '查看下级经销商')
+                            ]);
+                        }
                     }
                 }, {
                     title: '操作',
@@ -149,10 +165,13 @@
             }
         },
         methods: {
-            async getData () {
+            async getData (id) {
                 let param = {
                     phone: this.search.phone,
                     page: 0
+                }
+                if(id) {
+                    param.loginId = id
                 }
                 let data = await distributor(param)
                 this.loading = true
@@ -172,6 +191,11 @@
                     this.$Message.error(data.data.retMsg);
                 }
                 
+            },
+            async down (params) {
+                this.loading = false
+                let id = params.row.id
+                this.getData(id)
             },
             cancel() {
                 this.modal = false
@@ -232,9 +256,6 @@
                 
                
             }
-        },
-        components: {
-            Loading: Loading
         }
     }
 </script>

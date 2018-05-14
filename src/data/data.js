@@ -26,3 +26,9 @@ export async function deldis(config) {
 	let data = await axios.post('/api/base/deldis', config)
 	return data.data
 }
+
+//个人中心
+export async function userinfo(config) {
+	let data = await axios.get('/api/base/ercode')
+	return data.data
+}
