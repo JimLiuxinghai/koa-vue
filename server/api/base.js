@@ -44,6 +44,9 @@ export async function roles (ctx, config = {}) {
 export async function distributors (ctx, config = {}) {
 	try {
 		let query = ctx.query
+		if(query.person) {
+			query.phone = ctx.session.phone
+		}
 		let param = {
 			userInfo: {
 				phone: query.phone || '',
@@ -54,7 +57,7 @@ export async function distributors (ctx, config = {}) {
 				pageSize: query.pageSize || 10
 			}
 		}
-		let id = ctx.session.id
+		let id = query.loginId || ctx.session.id
 		let config = {
 			url: '/actions/getDistributors?loginId=' + id,
 			data: param
@@ -84,7 +87,6 @@ export async function adddis (ctx, config = {}) {
 				rate: query.rate
 			}
 		}
-		console.log(config)
 		let data = await request(ctx, config)
 		let ok = util.errorModal('ERR_OK')
 		ok.data = data.data

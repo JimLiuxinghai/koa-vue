@@ -36,6 +36,7 @@
         },
         data () {
             return {
+                loading: false,
                 orderNo: '',
                 checkStatus: '',
                 orderDate: [],
@@ -147,6 +148,7 @@
                 this.disRole = disData.content
                 this.tableData = data.data.data.content
                 this.total = data.data.data.totalElements
+                this.loading = true
                 
             },
             changeOrder(date) {

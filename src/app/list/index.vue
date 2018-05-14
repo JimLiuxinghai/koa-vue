@@ -88,6 +88,13 @@
                         ]);
                     }
                 }, {
+                    title: '下级经销商',
+                    key: 'down',
+                    align: 'center',
+                    render: (h, params) => {
+                        console.log(params)
+                    }
+                }, {
                     title: '操作',
                     key: 'action',
                     width: 150,
@@ -177,7 +184,6 @@
                 }
             },
             edit (params) {
-                console.log(params)
                 let data = params.row
                 this.add.name = data.name
                 this.add.phone = data.phone,
