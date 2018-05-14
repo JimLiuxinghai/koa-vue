@@ -9,7 +9,7 @@
                 <Input v-model="orderNo" placeholder="订单号" style="width: 200px; margin-right: 40px;"></Input>
                 <span>核销状态:</span>
                 <Select v-model="checkStatus" style="width:200px">
-                    <Option v-for="item in stateArr" :value="item.name" :key="item.key">{{ item.name }}</Option>
+                    <Option v-for="item in stateArr" :value="item.key" :key="item.key">{{ item.name }}</Option>
                 </Select>
             </div>
             <div class="second">
@@ -28,7 +28,7 @@
 </template>
 <script>
     import { list } from '../../data/order'
-    
+    import { distributor } from '../../data/data'
 
     export default {
         beforeMount () {
@@ -101,6 +101,8 @@
                 }
                 
                 let data = await list(param)
+                let disData = await distributor()
+                console.log(disData, '&&&&&&7')
                 this.tableData = data.data.data.content
                 this.total = data.data.data.totalElements
                 console.log(data, '****')

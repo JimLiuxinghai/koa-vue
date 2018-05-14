@@ -2,6 +2,7 @@
 logs
 *.log
 npm-debug.log*
+/build/*
 
 # Runtime data
 pids
@@ -38,5 +39,3 @@ jspm_packages
 sftp-config.json
 .DS_Store/*
 .DS_Store
-build/*
-build

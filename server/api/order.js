@@ -11,11 +11,11 @@ export async function list (ctx, config = {}) {
 			data: {
 				condition: {
 					orderNo: query.orderNo,
-					orderBegDate: query.orderBegDate,
-					orderEndDate: query.orderEndDate,
+					orderBegDate: query.orderBegDate || '',
+					orderEndDate: query.orderEndDate || '',
 					checkStatus: query.checkStatus,
-					checkBegDate: query.checkBegDate,
-					checkEndDate: query.checkEndDate
+					checkBegDate: query.checkBegDate || '',
+					checkEndDate: query.checkEndDate || ''
 				},
 				page: {
 					pageIndex: query.page,
