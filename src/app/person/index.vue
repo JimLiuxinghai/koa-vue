@@ -18,7 +18,7 @@
                 <span>分成比例:</span>{{user.rate}}
             </div>
             <div class="img">
-                <img src="{{user.imgUrl}}">
+                <img id="img" src="" />
                 <Button type="primary" @click="down">
                     点击下载推广二维码
                 </Button>
@@ -44,8 +44,11 @@
                 let data = await userinfo()
                 if(data.status.code == 200) {
                     this.user = data.data 
+                    console.log(data.data)
                     this.url = data.data.imgUrl
-                    console.log(this.url)  
+                    console.log(this.url) 
+                    $('#img').attr('src', data.data.imgUrl)
+                    console.log($('#img')) 
                 }
             },
             async down () {
