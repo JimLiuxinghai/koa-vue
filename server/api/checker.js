@@ -56,10 +56,32 @@ export async function add (ctx, config = {}) {
 	}
 }
 
+export async function del (ctx, config = {}) {
+	try {
+		let query = ctx.request.body
+		let id = ctx.session.id
+		let config = {
+			url: `/actions/chgCheckerStatus/${query.checkId}/2?loginId=` + id
+		}
+		let data = await request(ctx, config)
+		
+		let ok = util.errorModal('ERR_OK')
+		ok.data = data.data
+		ctx.body = ok
+	}
+	catch (e) {
+		console.log(e)
+		let ok = util.errorModal('ERR_SYSTEM_ERROR')
+		ctx.body = ok
+	}
+}
+
+
 
 module.exports = {
     'get /': list,
-    'post /': add
+    'post /': add,
+    'post /del': del
 }
 
 

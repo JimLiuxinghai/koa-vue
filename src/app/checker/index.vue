@@ -31,7 +31,7 @@
     </div>
 </template>
 <script>
-    import { list, add } from '../../data/checker'
+    import { list, add, del } from '../../data/checker'
     import Loading from '../common/loading.vue';
 
     export default {
@@ -67,7 +67,7 @@
                             text = '已删除'
                        }
                        return h('div', [
-                           h('Button', {
+                           h('div', {
                                props: {
                                    type: 'text',
                                    size: 'small'
@@ -82,20 +82,20 @@
                     align: 'center',
                     render: (h, params) => {
                         return h('div', [
-                            h('Button', {
-                                props: {
-                                    type: 'primary',
-                                    size: 'small'
-                                },
-                                style: {
-                                    marginRight: '5px'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.edit(params)
-                                    }
-                                }
-                            }, '修改'),
+                            // h('Button', {
+                            //     props: {
+                            //         type: 'primary',
+                            //         size: 'small'
+                            //     },
+                            //     style: {
+                            //         marginRight: '5px'
+                            //     },
+                            //     on: {
+                            //         click: () => {
+                            //             this.edit(params)
+                            //         }
+                            //     }
+                            // }, '修改'),
                             h('Button', {
                                 props: {
                                     type: 'error',

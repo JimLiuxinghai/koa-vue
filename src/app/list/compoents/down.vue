@@ -1,53 +1,28 @@
 <style lang="less" scoped>
-	@import 'index.less';
+	
 </style>
 <template>
-    <div class="dis">
-        <div class="top">
-            <Input v-model="search.phone" placeholder="请输入电话号" style="width: 300px"></Input>
-            <Button type="primary" @click="getData()">搜索</Button>
-            <Button type="primary" @click="modal = true">新增</Button>
-        </div>
-        <div class="inner">
-            <Table stripe :loading="!loading" border :columns="columns" :data="tableData"></Table>
-            <Page :total="tableData.length" :change="change"></Page>
-        </div>
-         <Modal
-             v-model="modal"
-             title="新增经销商"
-             @on-ok="addData"
-             @on-cancel="cancel">
-             <div class="add">
-                <div class="item">
-                    <span>名称:</span>
-                    <Input v-model="add.name" placeholder="请输入名称" style="width: 300px"></Input>
-                </div>
-                <div class="item">
-                    <span>手机号:</span>
-                    <Input v-model="add.phone" placeholder="请输入手机号" style="width: 300px"></Input>
-                </div>
-                <div class="item">
-                    <span>密码:</span>
-                    <Input v-model="add.password" placeholder="请输入密码" style="width: 300px"></Input>
-                </div>
-                <div class="item">
-                    <span>分成:</span>
-                    <Input v-model="add.rate" placeholder="请输入分成" style="width: 300px"></Input>%
-                </div>
-             </div>
-         </Modal>
-         <Down v-if="modal1" v-bind:list="list" v-on:closeListener="closeDown"></Down>
+    <div class="down">
+    	<Modal
+    		v-model="modal"
+    	    title="下级分销商"
+    	    width="900"
+    	    @on-visible-change="close"
+    	   	>
+    	    <div class="inner">
+    	        <Table stripe border :columns="columns" :data="list"></Table>
+    	    </div>
+    	</Modal>
+       
     </div>
 </template>
 <script>
-    import { distributor, deldis, adddis, getRole, actdis } from '../../data/data'
-    import Loading from '../common/loading.vue';
-    import Down from './compoents/down.vue'
+
     export default {
         beforeMount () {
-            this.getData();
-            this.getRoles();
+           
         },
+        props: ['list'],
         data () {
             return {
                 columns: [{
@@ -131,93 +106,59 @@
                             ]);
                         }
                         else {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    }
-                                }, '无')
-                            ]);
+                        	return h('div', [
+                        	    h('Button', {
+                        	        props: {
+                        	            type: 'text',
+                        	            size: 'small'
+                        	        }
+                        	    }, '无')
+                        	]);
                         }
                     }
-                }, {
-                    title: '操作',
-                    key: 'action',
-                    width: 150,
-                    align: 'center',
-                    render: (h, params) => {
-                        return h('div', [
-                            // h('Button', {
-                            //     props: {
-                            //         type: 'primary',
-                            //         size: 'small'
-                            //     },
-                            //     style: {
-                            //         marginRight: '5px'
-                            //     },
-                            //     on: {
-                            //         click: () => {
-                            //             this.edit(params)
-                            //         }
-                            //     }
-                            // }, '修改'),
-                            h('Button', {
-                                props: {
-                                    type: 'error',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.remove(params)
-                                    }
-                                }
-                            }, '删除')
-                        ]);
-                    }
-                }],
-                
-                search: {
-                    phone: ''
-                },
-                tableData: [],
-                roleArr: [],
-                loading: false,
-                modal: false,
-                isEdit: false,
-                modal1: false,
-                list: [],
-                add: {
-                    name: '',
-                    phone: '',
-                    password: '',
-                    distrRole: '',
-                    rate: ''
                 }
-                
+                // , {
+                //     title: '操作',
+                //     key: 'action',
+                //     width: 150,
+                //     align: 'center',
+                //     render: (h, params) => {
+                //         return h('div', [
+                //             // h('Button', {
+                //             //     props: {
+                //             //         type: 'primary',
+                //             //         size: 'small'
+                //             //     },
+                //             //     style: {
+                //             //         marginRight: '5px'
+                //             //     },
+                //             //     on: {
+                //             //         click: () => {
+                //             //             this.edit(params)
+                //             //         }
+                //             //     }
+                //             // }, '修改'),
+                //             h('Button', {
+                //                 props: {
+                //                     type: 'error',
+                //                     size: 'small'
+                //                 },
+                //                 on: {
+                //                     click: () => {
+                //                         this.remove(params)
+                //                     }
+                //                 }
+                //             }, '删除')
+                //         ]);
+                //     }
+                // }
+                ],
+				modal: true,                
+                loading: false
             }
         },
         methods: {
-            async getData (id, isDown) {
-                
-                let param = {
-                    phone: this.search.phone,
-                    page: 0
-                }
-                if(id) {
-                    param.loginId = id
-                }
-                let data = await distributor(param)
-                if(!isDown) {
-                   this.loading = true
-                   this.tableData = data.content 
-                }
-                else {
-                    this.list = data.content
-                }
-                
-                
-            },
+            
             async remove (params) {
                 let param = {
                     id: params.row.id
@@ -232,24 +173,14 @@
                 }
                 
             },
-            closeDown (data) {
-                this.modal1 = false
-            },
             async down (params) {
-                //this.loading = false
-                this.modal1 = true
+                this.loading = false
                 let id = params.row.id
-                this.getData(id, true)
+                //this.getData(id)
             },
-            cancel() {
+            close() {
                 this.modal = false
-                this.add = {
-                    name: '',
-                    phone: '',
-                    password: '',
-                    distrRole: '',
-                    rate: ''
-                }
+                this.$emit('closeListener', '123')
             },
             edit (params) {
                 let data = params.row
@@ -300,9 +231,6 @@
                 
                
             }
-        },
-        components: {
-            Down: Down
         }
     }
 </script>
