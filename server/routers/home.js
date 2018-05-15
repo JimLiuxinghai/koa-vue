@@ -8,7 +8,7 @@ const auth = require('../filter/auth')
 module.exports = router
   .get('/', auth, async (ctx) => {
 	  	try {
-  		  	const title = 'home'
+  		  	const title = '中国翰园碑林管理平台'
   		  	const userName = ctx.session.userName
   		  	await ctx.render('index', {
   			  	  title,

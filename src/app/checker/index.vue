@@ -53,7 +53,28 @@
                     key: 'username'
                 }, {
                    title: '状态',
-                   key: 'enable' 
+                   key: 'enable',
+                   render: (h, params) => {
+                       let enable = params.row.enable
+                       let text = ''
+                       if(enable == 0) {
+                            text = '未激活'
+                       }
+                       else if(enable == 1) {
+                            text = '已激活'
+                       }
+                       else if(enbale == 2) {
+                            text = '已删除'
+                       }
+                       return h('div', [
+                           h('Button', {
+                               props: {
+                                   type: 'text',
+                                   size: 'small'
+                               }
+                           }, text)
+                       ]);
+                   }
                 },{
                     title: '操作',
                     key: 'action',
