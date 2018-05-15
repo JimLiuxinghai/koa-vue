@@ -4,7 +4,7 @@
 <template>
     <div class="dis">
         <div class="top">
-            <Input v-model="search.phone" placeholder="请输入电话号" style="width: 300px"></Input>
+            <Input v-model="search.phone" placeholder="请输入手机号" style="width: 300px"></Input>
             <Button type="primary" @click="getData()">搜索</Button>
             <Button type="primary" @click="modal = true">新增</Button>
         </div>
@@ -57,7 +57,7 @@
                     title: '分销商名称',
                     key: 'name'
                 }, {
-                    title: '电话',
+                    title: '手机号',
                     key: 'phone'
                 }, {
                     title: '分销商等级',
@@ -69,7 +69,7 @@
                     title: '状态',
                     key: 'enable',
                     render: (h, params) => {
-                        console.log(params.row.enable)
+                        
                         let text = params.row.enable == '1' ? '已激活': '去激活';
                         if(params.row.enable == 1) {
                             return h('div', [

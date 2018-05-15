@@ -181,7 +181,7 @@ export async function ercode (ctx, config = {}) {
 			}
 		}
 		let data = await request(ctx, config)
-
+		console.log(data)
 		if(data.data.retCode == 0) {
 			
 			let ok = util.errorModal('ERR_OK')

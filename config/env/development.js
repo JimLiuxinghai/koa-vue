@@ -1,5 +1,5 @@
 export default {
-    port: 9058,
+    port: 9185,
     host: 'http://123.206.63.144:7998',
     db: {
     	mysql: {

@@ -14,6 +14,7 @@ export async function login (ctx, config = {}) {
 			}
 		}
 		let reqData = await request(ctx, config)
+		console.log(reqData)
 		let ok = null
 		if(reqData.data.retCode == 0) {
 			ctx.session.isLogin = true
