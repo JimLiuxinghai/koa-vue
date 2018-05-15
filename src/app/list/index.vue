@@ -5,7 +5,7 @@
     <div class="dis">
         <div class="top">
             <Input v-model="search.phone" placeholder="请输入电话号" style="width: 300px"></Input>
-            <Button type="primary" @click="getData">搜索</Button>
+            <Button type="primary" @click="getData()">搜索</Button>
             <Button type="primary" @click="modal = true">新增</Button>
         </div>
         <div class="inner">
@@ -166,6 +166,7 @@
         },
         methods: {
             async getData (id) {
+                console.log(id)
                 let param = {
                     phone: this.search.phone,
                     page: 0
