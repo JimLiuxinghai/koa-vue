@@ -35,7 +35,7 @@ export default {
         },
         {
             path: '*', 
-            redirect: '/dealer'
+            redirect: '/order'
         },
       ]
 }

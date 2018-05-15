@@ -26,30 +26,33 @@
   }
 </style>
 <template>
-  <Menu theme="dark" width="auto" :class="menuitemClasses" :active-name="activeIndex">
-    <router-link  v-for="(item, index) in menuList" :to="item.menuUrl">
-      <MenuItem :name="index">
-        <Icon :type="item.menuFont"></Icon>
-        {{item.menuName}}
-      </MenuItem>
-    </router-link>
+  <div>
     
-  </Menu>
+    <Menu theme="dark" width="auto" :class="menuitemClasses" :active-name="activeIndex">
+      <router-link  v-for="(item, index) in menuList" :to="item.menuUrl">
+        <MenuItem :name="item.menuUrl">
+          <Icon :type="item.menuFont"></Icon>
+          {{item.menuName}}
+        </MenuItem>
+      </router-link>
+      
+    </Menu>
+  </div>
+  
 </template>
 <script>
   import { menu } from '../data/data'
   export default {
     mounted (){
-      console.log(this.$route.name)
-      this.activeIndex = 0;
+      this.activeIndex = this.$route.path;
       console.log(this.activeIndex, 'active')
       this.getData()
-
     },
     methods: {
       async getData() {
         let data = await menu()
         this.menuList = data.data.data
+        console.log(this.menuList)
       }
     },
     data () {

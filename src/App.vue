@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-   <!--  <div class="header">
+    <div class="header">
       中国翰园碑林管理平台
-    </div> -->
+      <Button style="float: right; margin-right: 20px; margin-top: 10px;" type="warning" @click="logout">退出</Button>
+    </div>
     <div class="left">
       <Navigation></Navigation>
     </div>
@@ -16,6 +17,11 @@
   import Navigation from './components/menu.vue'
   export default {
     name: 'app',
+    methods: {
+      logout() {
+        window.location.href = '/login'
+      }
+    },
     components: {Navigation:Navigation}
   }
 </script>

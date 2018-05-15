@@ -163,7 +163,18 @@
 
             },
             async remove (params) {
+                let config = {
+                    checkId: params.row.id
+                }
 
+                let data = await del(config)
+                if(data.data.retCode != 0) {
+                    this.$Message.error(data.data.retMsg);
+                }
+                else {
+                    this.$Message.success('删除成功');
+                    this.getData()
+                }
             }
         },
         components: {
