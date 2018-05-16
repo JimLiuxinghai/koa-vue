@@ -17,6 +17,7 @@
              title="新增经销商"
              @on-ok="addData"
              @on-cancel="cancel"
+             :loading = "modalLoading"
              width="800">
              <div class="add">
                 <div class="item">
@@ -83,7 +84,10 @@
                     key: 'controller'
                 }, {
                     title: '分销商分成比例',
-                    key: 'rate'
+                    key: 'rate',
+                    render: (h, params) => {
+                        return h('div', params.row.rate + '%')
+                    }
                 }, {
                     title: '状态',
                     key: 'enable',
@@ -91,22 +95,7 @@
                         
                         let text = params.row.enable == '1' ? '已激活': '去激活';
                         if(params.row.enable == 1) {
-                            return h('div', [
-                                 h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.active(params)
-                                        }
-                                    }
-                                }, text)
-                            ]);
+                            return h('div', text);
                         }
                         else {
                             return h('div', [
@@ -219,6 +208,7 @@
                 tableData: [],
                 roleArr: [],
                 loading: false,
+                modalLoading: true,
                 modal: false,
                 isEdit: false,
                 modal1: false,
@@ -318,19 +308,36 @@
                 this.modal = true
                 this.edit = true
             },
+            changeLoading() {
+                this.modalLoading = false;
+                this.$nextTick(() => {
+                    this.modalLoading = true;
+                })
+             },
             async addData () {
                 this.isEdit = false
                 this.add.distrRole = this.roleArr[0].id
                 let param = this.add
-                console.log(param, 'addparam')
+                
                 let data = await adddis(param)
+
                 if(data.data.retCode == 0) {
-                    this.$Message.success('添加成功');
-                    this.getData();
+                    setTimeout(() => {
+                        this.changeLoading();
+                        this.$Message.success('添加成功');
+                        this.getData();
+                        this.modal = false
+                      }, 100);
+                    
                 }
                 else {
+                    alert(data.data.retMsg)
                     this.$Message.error(data.data.retMsg);
+                    return this.changeLoading();
+                    
+                    
                 }
+
                
             },
             async getRoles() {

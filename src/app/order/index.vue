@@ -14,9 +14,9 @@
             </div>
             <div class="second">
                 <span>下单时间:</span>
-                <DatePicker type="datetimerange" @on-change="changeOrder"  format="yyyy-MM-dd HH:mm:ss" placeholder="选择下单时间" style="width: 300px;margin-right: 40px;"></DatePicker>
+                <DatePicker type="datetimerange" @on-change="changeOrder"  format="yyyy-MM-dd HH:mm:ss" placeholder="选择下单时间" style="width: 250px;margin-right: 20px;"></DatePicker>
                 <span>核销时间:</span>
-                <DatePicker type="datetimerange" @on-change="changeCheck"  format="yyyy-MM-dd HH:mm:ss" placeholder="选择核销时间" style="width: 300px;margin-right: 40px;"></DatePicker>
+                <DatePicker type="datetimerange" @on-change="changeCheck"  format="yyyy-MM-dd HH:mm:ss" placeholder="选择核销时间" style="width: 250px;margin-right: 20px;"></DatePicker>
                 <span>经销商</span>
                 <Select v-model="distributeId" style="width:150px;margin-right: 40px;">
                     <Option v-for="item in disRole" :value="item.id" :key="item.id">{{ item.name }}</Option>
@@ -55,7 +55,7 @@
                     name: '已验证'
                 }, {
                     key: '3',
-                    name: '已失效'
+                    name: '已退款'
                 }],
                 page: 0,
                 columns: [{
