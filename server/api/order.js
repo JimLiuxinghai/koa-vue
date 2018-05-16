@@ -6,11 +6,18 @@ export async function list (ctx, config = {}) {
 	try {
 		let query = ctx.query
 		let id = ctx.session.id
+		if(query.distributeId == 'self') {
+			query.distributeId = id
+		}
+		else if(query.distributeId == 'all') {
+			query.distributeId = null
+		}
 		let config = {
 			url: '/prd/getOrderBack?loginId=' + id,
 			data: {
 				condition: {
 					orderNo: query.orderNo,
+					distributeId: query.distributeId || null,
 					orderBegDate: query.orderBegDate || '',
 					orderEndDate: query.orderEndDate || '',
 					checkStatus: query.checkStatus,

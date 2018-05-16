@@ -33,15 +33,15 @@
                 </div>
                 <div class="item">
                     <span>地址:</span>
-                    <Select v-model="add.province" style="width:150px" @on-change="changePro">
+                    <Select v-model="add.provinceId" style="width:150px" @on-change="changePro">
                         <Option v-for="item in provinceList" :value="item.code" :key="item.code">{{ item.name }}</Option>
                     </Select>
 
-                    <Select v-model="add.city" style="width:150px" @on-change="changeCity">
+                    <Select v-model="add.cityId" style="width:150px" @on-change="changeCity">
                         <Option v-for="item in cityList" :value="item.code" :key="item.code">{{ item.name }}</Option>
                     </Select>
  
-                    <Select v-model="add.countryList" style="width:150px" @on-change="changeCoun">
+                    <Select v-model="add.countryId" style="width:150px" @on-change="changeCoun">
                         <Option v-for="item in countryList" :value="item.code"  :key="item.code">{{ item.name }}</Option>
                     </Select>
                 </div>
@@ -133,25 +133,8 @@
                     key: 'city',
                     align: 'center',
                     render: (h, params) => {
-                        let proCode = params.row.province
-                        let cityCode = params.row.city
-                        let countryCode = params.row.country
-                        let text = []
-                        this.provinceList.forEach((item) => {
-                            if(item.code == proCode) {
-                               text.push(item.name) 
-                            }
-                        })
-                        this.cityList.forEach((item) => {
-                            if(item.code == cityCode) {
-                               text.push(item.name) 
-                            }
-                        })
-                        this.countryList.forEach((item) => {
-                            if(item.code == countryCode) {
-                               text.push(item.name) 
-                            }
-                        })
+                        let text = [params.row.province, params.row.city, params.row.country]
+                       
                         text = text.join('')
                         return h('div', [
                             h('Button', {
@@ -250,8 +233,11 @@
                     distrRole: '',
                     rate: '',
                     province: '',
+                    provinceId: '',
+                    cityId: '',
                     city: '',
-                    country: ''
+                    country: '',
+                    countryId: ''
                 }
                 
             }
@@ -266,7 +252,6 @@
                 if(id) {
                     param.loginId = id
                 }
-                console.log(param, '***')
                 let data = await distributor(param)
                 if(!isDown) {
                    this.loading = true
@@ -308,7 +293,13 @@
                     phone: '',
                     password: '',
                     distrRole: '',
-                    rate: ''
+                    rate: '',
+                    province: '',
+                    provinceId: '',
+                    cityId: '',
+                    city: '',
+                    country: '',
+                    countryId: ''
                 }
             },
             edit (params) {
@@ -319,8 +310,11 @@
                 this.add.rate = data.rate
                 this.add.distrRole = data.distrRole
                 this.add.province = data.province
+                this.add.provinceId = data.provinceId
                 this.add.city = data.city
+                this.add.cityId = data.cityId
                 this.add.country = data.country
+                this.add.countryId = data.countryId
                 this.modal = true
                 this.edit = true
             },
@@ -328,6 +322,7 @@
                 this.isEdit = false
                 this.add.distrRole = this.roleArr[0].id
                 let param = this.add
+                console.log(param, 'addparam')
                 let data = await adddis(param)
                 if(data.data.retCode == 0) {
                     this.$Message.success('添加成功');
@@ -381,22 +376,24 @@
                 }
             },
             changePro(val) {
-                console.log(val)
+                console.log(val, 'proval')
                 let name = ''
                 this.provinceList.forEach((item) => {
                     if(val == item.code) {
                         name = item.name
                     }
                 })
-                console.log(name)
-                this.add.province = val
+                
+                this.add.province = name
+                //this.add.provinceId = val
+                console.log(this.add)
                 this.getCity({
                     type: 2,
                     code: val
                 })
             },
             changeCity(val) {
-                console.log(val)
+                console.log(val, 'cityval')
                 let name = ''
                 this.cityList.forEach((item) => {
                     if(val == item.code) {
@@ -404,22 +401,26 @@
                     }
                 })
                 console.log(name)
-                this.add.city = val
+                //this.add.cityId = val
+                this.add.city = name
+                console.log(this.add)
                 this.getCity({
                     type: 3,
                     code: val
                 })
             },
             changeCoun(val) {
-                console.log(val)
+               console.log(val, 'counval')
                 let name = ''
                 this.countryList.forEach((item) => {
                     if(val == item.code) {
                         name = item.name
                     }
                 })
-                console.log(name)
-                this.add.country = val
+
+                this.add.country = name
+                //this.add.countryId = val
+                console.log(this.add)
             }
         },
         components: {

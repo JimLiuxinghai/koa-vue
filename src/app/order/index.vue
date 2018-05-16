@@ -6,9 +6,9 @@
         <div class="top">
             <div class="first">
                 <span>订单号:</span>
-                <Input v-model="orderNo" placeholder="订单号" style="width: 300px; margin-right: 40px;"></Input>
+                <Input v-model="orderNo" placeholder="订单号" style="width: 150px; margin-right: 40px;"></Input>
                 <span>核销状态:</span>
-                <Select v-model="checkStatus" style="width:300px">
+                <Select v-model="checkStatus" style="width:150px">
                     <Option v-for="item in stateArr" :value="item.key" :key="item.key">{{ item.name }}</Option>
                 </Select>
             </div>
@@ -17,6 +17,10 @@
                 <DatePicker type="datetimerange" @on-change="changeOrder"  format="yyyy-MM-dd HH:mm:ss" placeholder="选择下单时间" style="width: 300px;margin-right: 40px;"></DatePicker>
                 <span>核销时间:</span>
                 <DatePicker type="datetimerange" @on-change="changeCheck"  format="yyyy-MM-dd HH:mm:ss" placeholder="选择核销时间" style="width: 300px;margin-right: 40px;"></DatePicker>
+                <span>经销商</span>
+                <Select v-model="distributeId" style="width:150px;margin-right: 40px;">
+                    <Option v-for="item in disRole" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                </Select>
                 <Button type="primary" @click="getData">查询</Button>
             </div>
         </div>
@@ -33,6 +37,7 @@
     export default {
         beforeMount () {
             this.getData();
+            this.getDis();
         },
         data () {
             return {
@@ -119,16 +124,30 @@
                     key: 'checkDate'
                 }],
                 tableData: [],
-                total: 0
+                total: 0,
+                distributeId: ''
                 
             }
         },
         methods: {
+            async getDis () {
+                this.disRole.push({
+                    id: 'all',
+                    name: '全部'
+                }, {
+                    id: 'self',
+                    name: '直销'
+                })
+                let disData = await distributor()
+                this.disRole = this.disRole.concat(disData.content)
+                console.log(this.disRole)
+            },
             async getData () {
                 let param = {
                     page: this.page,
                     orderNo: this.orderNo,
-                    checkStatus: this.checkStatus
+                    checkStatus: this.checkStatus,
+                    distributeId: this.distributeId
                 }
                 if(this.orderDate.length) {
                     param.orderBegDate = this.orderDate[0]
@@ -140,12 +159,8 @@
                 }
                 
                 let data = await list(param)
-                let disData = await distributor({
-                    page: 0,
-                    pageSize: 1000
-                })
                 
-                this.disRole = disData.content
+
                 this.tableData = data.data.data.content
                 this.total = data.data.data.totalElements
                 this.loading = true

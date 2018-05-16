@@ -87,7 +87,10 @@ export async function adddis (ctx, config = {}) {
 				rate: query.rate,
 				province: query.province,
 				city: query.city,
-				county: query.county
+				county: query.country,
+				provinceId: query.provinceId,
+				cityId: query.cityId,
+				countyId: query.countryId
 			}
 		}
 		let data = await request(ctx, config)
