@@ -99,26 +99,11 @@
                         ]);
                     }
                 }, {
-                    title: '经销商',
-                    key: 'distributorId',
-                    render: (h, params) => {
-                        const config = {
-                            10: '景区',
-                            11: '一级经销商',
-                            12: '二级经销商'
-                        }
-                        let text = config[params.row.distrRole]
-                        
-                        
-                        return h('div', [
-                             h('Button', {
-                                props: {
-                                    type: 'text',
-                                    size: 'small'
-                                }
-                            }, text)
-                        ]);
-                    }
+                    title: '一级经销商',
+                    key: 'distrName1'
+                },{
+                    title: '二级经销商',
+                    key: 'distrName2'
                 },{
                     title: '核销时间',
                     key: 'checkDate'

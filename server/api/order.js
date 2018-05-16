@@ -37,6 +37,7 @@ export async function list (ctx, config = {}) {
 		ctx.body = ok
 	}
 	catch (e) {
+		console.log('****')
 		console.log(e)
 		let ok = util.errorModal('ERR_SYSTEM_ERROR')
 		ctx.body = ok
