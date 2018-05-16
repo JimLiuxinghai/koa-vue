@@ -6,9 +6,9 @@
         <div class="top">
             <div class="first">
                 <span>订单号:</span>
-                <Input v-model="orderNo" placeholder="订单号" style="width: 150px; margin-right: 40px;"></Input>
+                <Input v-model="orderNo" @on-change="changeSearch" placeholder="订单号" style="width: 150px; margin-right: 40px;"></Input>
                 <span>核销状态:</span>
-                <Select v-model="checkStatus" style="width:150px">
+                <Select v-model="checkStatus" @on-change="changeSearch" style="width:150px">
                     <Option v-for="item in stateArr" :value="item.key" :key="item.key">{{ item.name }}</Option>
                 </Select>
             </div>
@@ -18,7 +18,7 @@
                 <span>核销时间:</span>
                 <DatePicker type="datetimerange" @on-change="changeCheck"  format="yyyy-MM-dd HH:mm:ss" placeholder="选择核销时间" style="width: 250px;margin-right: 20px;"></DatePicker>
                 <span>经销商</span>
-                <Select v-model="distributeId" style="width:150px;margin-right: 40px;">
+                <Select v-model="distributeId" @on-change="changeSearch" style="width:150px;margin-right: 40px;">
                     <Option v-for="item in disRole" :value="item.id" :key="item.id">{{ item.name }}</Option>
                 </Select>
                 <Button type="primary" @click="getData">查询</Button>
@@ -151,10 +151,15 @@
                 this.loading = true
                 
             },
+            changeSearch() {
+                this.page = 0
+            },
             changeOrder(date) {
+                this.page = 0
                 this.orderDate = date
             },
             changeCheck(date) {
+                this.page = 0
                 this.checkDate = date
             },
             async remove (params) {
