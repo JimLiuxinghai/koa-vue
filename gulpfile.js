@@ -23,7 +23,7 @@ gulp.task('webpack', function() {
         publicPath: '../static/'
     };
     webpack(myConfig, function (err, state) {
-        console.log('## 代码编译完成', state);
+        console.log('## 代码编译完成');
     })
 })
 

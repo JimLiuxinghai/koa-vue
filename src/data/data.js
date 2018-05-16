@@ -32,3 +32,9 @@ export async function userinfo(config) {
 	let data = await axios.get('/api/base/ercode')
 	return data.data
 }
+
+//省市区
+export async function city(config) {
+	let data = await axios.get('/api/base/city', { params: config })
+	return data.data.data.data
+}

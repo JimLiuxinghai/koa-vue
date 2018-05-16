@@ -81,14 +81,13 @@
                         const stateConfig = {
                             1: '待验证',
                             2: '已验证',
-                            3: '已失效'
+                            3: '已退款'
                         }
                         let text = stateConfig[params.row.checkStatus]
-                        console.log(text, '****')
                         return h('div', [
                              h('Button', {
                                 props: {
-                                    type: 'primary',
+                                    type: 'text',
                                     size: 'small'
                                 }
                             }, text)
@@ -98,13 +97,14 @@
                     title: '经销商',
                     key: 'distributorId',
                     render: (h, params) => {
-                        let text = ''
-                        this.disRole.forEach((item) => {
-                            if(params.row.id == item.distributorId) {
-                                text = item.name
-                            }
-                        })
-                        console.log(text)
+                        const config = {
+                            10: '景区',
+                            11: '一级经销商',
+                            12: '二级经销商'
+                        }
+                        let text = config[params.row.distrRole]
+                        
+                        
                         return h('div', [
                              h('Button', {
                                 props: {

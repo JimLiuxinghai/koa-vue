@@ -16,7 +16,8 @@
              v-model="modal"
              title="新增经销商"
              @on-ok="addData"
-             @on-cancel="cancel">
+             @on-cancel="cancel"
+             width="800">
              <div class="add">
                 <div class="item">
                     <span>名称:</span>
@@ -31,6 +32,20 @@
                     <Input v-model="add.password" placeholder="请输入密码" style="width: 300px"></Input>
                 </div>
                 <div class="item">
+                    <span>地址:</span>
+                    <Select v-model="add.province" style="width:150px" @on-change="changePro">
+                        <Option v-for="item in provinceList" :value="item.code" :key="item.code">{{ item.name }}</Option>
+                    </Select>
+
+                    <Select v-model="add.city" style="width:150px" @on-change="changeCity">
+                        <Option v-for="item in cityList" :value="item.code" :key="item.code">{{ item.name }}</Option>
+                    </Select>
+ 
+                    <Select v-model="add.countryList" style="width:150px" @on-change="changeCoun">
+                        <Option v-for="item in cityList" :value="item.code" :key="item.code">{{ item.name }}</Option>
+                    </Select>
+                </div>
+                <div class="item">
                     <span>分成:</span>
                     <Input v-model="add.rate" placeholder="请输入分成" style="width: 300px"></Input>%
                 </div>
@@ -40,13 +55,17 @@
     </div>
 </template>
 <script>
-    import { distributor, deldis, adddis, getRole, actdis } from '../../data/data'
+    import { distributor, deldis, adddis, getRole, actdis, city } from '../../data/data'
     import Loading from '../common/loading.vue';
     import Down from './compoents/down.vue'
     export default {
         beforeMount () {
             this.getData();
             this.getRoles();
+            this.getCity({
+                type: 1,
+                code: '000000'
+            })
         },
         data () {
             return {
@@ -110,6 +129,40 @@
                         
                     }
                 }, {
+                    title: '地址',
+                    key: 'city',
+                    align: 'center',
+                    render: (h, params) => {
+                        let proCode = params.row.province
+                        let cityCode = params.row.city
+                        let countryCode = params.row.country
+                        let text = []
+                        this.provinceList.forEach((item) => {
+                            if(item.code == proCode) {
+                               text.push(item.name) 
+                            }
+                        })
+                        this.cityList.forEach((item) => {
+                            if(item.code == cityCode) {
+                               text.push(item.name) 
+                            }
+                        })
+                        this.countryList.forEach((item) => {
+                            if(item.code == countryCode) {
+                               text.push(item.name) 
+                            }
+                        })
+                        text = text.join('')
+                        return h('div', [
+                            h('Button', {
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                }
+                            }, text)
+                        ]);
+                    }
+                },{
                     title: '下级经销商',
                     key: 'down',
                     align: 'center',
@@ -187,12 +240,18 @@
                 isEdit: false,
                 modal1: false,
                 list: [],
+                provinceList: [],
+                cityList: [],
+                countryList: [],
                 add: {
                     name: '',
                     phone: '',
                     password: '',
                     distrRole: '',
-                    rate: ''
+                    rate: '',
+                    province: '',
+                    city: '',
+                    country: ''
                 }
                 
             }
@@ -207,6 +266,7 @@
                 if(id) {
                     param.loginId = id
                 }
+                console.log(param, '***')
                 let data = await distributor(param)
                 if(!isDown) {
                    this.loading = true
@@ -299,6 +359,43 @@
                 }
                 
                
+            },
+            async getCity (params) {
+                let config = {
+                    type: params.type,
+                    code: params.code
+                }
+                let data = await city(config)
+                
+                if(params.type == 1) {
+                    this.provinceList = data
+                }
+                else if(params.type == 2) {
+                    this.cityList = data
+                }
+                else if(params.type == 3) {
+                    this.countryList = data
+                }
+            },
+            changePro(val) {
+                console.log(val)
+                this.add.province = val
+                this.getCity({
+                    type: 2,
+                    code: val
+                })
+            },
+            changeCity(val) {
+                console.log(val)
+                this.add.city = val
+                this.getCity({
+                    type: 3,
+                    code: val
+                })
+            },
+            changeCoun(val) {
+                console.log(val)
+                this.add.country = val
             }
         },
         components: {

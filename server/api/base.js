@@ -84,7 +84,10 @@ export async function adddis (ctx, config = {}) {
 				name: query.name,
 				password: query.password,	
 				phone: query.phone,
-				rate: query.rate
+				rate: query.rate,
+				province: query.province,
+				city: query.city,
+				county: query.county
 			}
 		}
 		let data = await request(ctx, config)
@@ -192,6 +195,9 @@ export async function ercode (ctx, config = {}) {
 				name: user.name,
 				rate: user.rate,
 				status: user.status,
+				city: user.city,
+				province: user.province,
+				county: user.county,
 				img: ENV_CONFIG.host + data.data.data + '.png',
 				imgUrl: ENV_CONFIG.host + data.data.data
 			}
@@ -209,6 +215,26 @@ export async function ercode (ctx, config = {}) {
 		ctx.body = ok
 	}
 }
+export async function city (ctx, config = {}) {
+	try {
+		let query = ctx.query
+
+		let id = ctx.session.id
+		let config = {
+			url: `/prd/getCitys/${query.type}/${query.code}`
+		}
+		let data = await request(ctx, config)
+		let ok = util.errorModal('ERR_OK')
+		ok.data = data.data
+		ctx.body = ok
+	}
+	catch (e) {
+		console.log(e)
+		let ok = util.errorModal('ERR_SYSTEM_ERROR')
+		ctx.body = ok
+	}
+}
+
 module.exports = {
     'get /': menu,
     'get /roles': roles,
@@ -217,7 +243,8 @@ module.exports = {
     'post /deldis': deldis,
     'post /actdis': actdis,
     'post /addChecker': addChecker,
-    'get /ercode': ercode
+    'get /ercode': ercode,
+    'get /city': city
 }
 
 

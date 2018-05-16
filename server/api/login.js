@@ -22,7 +22,11 @@ export async function login (ctx, config = {}) {
 				phone: reqData.data.data.phone,
 				name: reqData.data.data.name,
 				rate: reqData.data.data.rate,
-				status: reqData.data.data.enable
+				status: reqData.data.data.enable,
+				province: reqData.data.data.province,
+				city: reqData.data.data.city,
+				county: reqData.data.data.county
+
 			}
 			ctx.session.id = reqData.data.data.id
 			ok = util.errorModal('ERR_OK')

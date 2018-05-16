@@ -36,7 +36,11 @@
         data () {
             return {
                 user: {},
-                url: ''
+                url: '',
+                city: '',
+                pro: '',
+                country: ''
+
             }
         },
         methods: {
@@ -44,11 +48,40 @@
                 let data = await userinfo()
                 if(data.status.code == 200) {
                     this.user = data.data 
-                    console.log(data.data)
+                    
                     this.url = data.data.imgUrl
-                    console.log(this.url) 
+                     
                     $('#img').attr('src', data.data.imgUrl)
-                    console.log($('#img')) 
+                    let pro = this.getCity({
+                        type: 1,
+                        code: data.data.province
+                    }) 
+                    let city = this.getCity({
+                        type: 2,
+                        code: data.data.city
+                    })
+                    let country = this.getCity({
+                        type: 3,
+                        code: data.data.country
+                    })
+
+                }
+            },
+            async getCity (params) {
+                let config = {
+                    type: params.type,
+                    code: params.code
+                }
+                let data = await city(config)
+                
+                if(params.type == 1) {
+                    this.pro = data
+                }
+                else if(params.type == 2) {
+                    this.city = data
+                }
+                else if(params.type == 3) {
+                    this.country = data
                 }
             },
             async down () {

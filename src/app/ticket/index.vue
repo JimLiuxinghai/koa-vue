@@ -80,13 +80,43 @@
                     key: 'productName'
                 }, {
                    title: '状态',
-                   key: 'enable' 
+                   key: 'enable',
+                   render: (h, params) => {
+                       const stateConfig = {
+                           0: '失效',
+                           1: '正常'
+                       }
+                       let text = stateConfig[params.row.enable]
+                       return h('div', [
+                            h('Button', {
+                               props: {
+                                   type: 'text',
+                                   size: 'small'
+                               }
+                           }, text)
+                       ]);
+                   } 
                 }, {
                     title: '价格',
                     key: 'salePrice' 
                 }, {
                     title: '是否允许退票',
-                    key: 'isRefund'
+                    key: 'isRefund',
+                    render: (h, params) => {
+                        const stateConfig = {
+                            0: '否',
+                            1: '是'
+                        }
+                        let text = stateConfig[params.row.isRefund]
+                        return h('div', [
+                             h('Button', {
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                }
+                            }, text)
+                        ]);
+                    } 
                 }],
                 page: 0,
                 add: {
