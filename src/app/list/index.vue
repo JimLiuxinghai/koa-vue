@@ -42,7 +42,7 @@
                     </Select>
  
                     <Select v-model="add.countryList" style="width:150px" @on-change="changeCoun">
-                        <Option v-for="item in cityList" :value="item.code" :key="item.code">{{ item.name }}</Option>
+                        <Option v-for="item in countryList" :value="item.code"  :key="item.code">{{ item.name }}</Option>
                     </Select>
                 </div>
                 <div class="item">
@@ -318,6 +318,9 @@
                 this.add.password = data.password
                 this.add.rate = data.rate
                 this.add.distrRole = data.distrRole
+                this.add.province = data.province
+                this.add.city = data.city
+                this.add.country = data.country
                 this.modal = true
                 this.edit = true
             },
@@ -379,6 +382,13 @@
             },
             changePro(val) {
                 console.log(val)
+                let name = ''
+                this.provinceList.forEach((item) => {
+                    if(val == item.code) {
+                        name = item.name
+                    }
+                })
+                console.log(name)
                 this.add.province = val
                 this.getCity({
                     type: 2,
@@ -387,6 +397,13 @@
             },
             changeCity(val) {
                 console.log(val)
+                let name = ''
+                this.cityList.forEach((item) => {
+                    if(val == item.code) {
+                        name = item.name
+                    }
+                })
+                console.log(name)
                 this.add.city = val
                 this.getCity({
                     type: 3,
@@ -395,6 +412,13 @@
             },
             changeCoun(val) {
                 console.log(val)
+                let name = ''
+                this.countryList.forEach((item) => {
+                    if(val == item.code) {
+                        name = item.name
+                    }
+                })
+                console.log(name)
                 this.add.country = val
             }
         },
