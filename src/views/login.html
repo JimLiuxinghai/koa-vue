@@ -105,7 +105,6 @@
         </div>
     </div>
     <div class="under"></div>
-    <button class="button">点击</button>
     <script>
     	$(function() {
     		$('.button').click(function() {
@@ -119,7 +118,6 @@
     					pass: pass
     				},
     				success: function(res) {
-    					console.log(res)
     					if(res.status.code == 200) {
     						window.location.href = "/"
     					}

@@ -13,8 +13,9 @@ export async function login (ctx, config = {}) {
 				password: query.pass
 			}
 		}
+		console.log(config.data, 'user')
 		let reqData = await request(ctx, config)
-		console.log(reqData)
+		
 		let ok = null
 		if(reqData.data.retCode == 0) {
 			ctx.session.isLogin = true
