@@ -6,9 +6,9 @@
         <div class="top">
             <div class="first">
                 <span>订单号:</span>
-                <Input v-model="orderNo" @on-change="changeSearch" placeholder="订单号" style="width: 150px; margin-right: 40px;"></Input>
+                <Input v-model="orderNo" placeholder="订单号" style="width: 150px; margin-right: 40px;"></Input>
                 <span>核销状态:</span>
-                <Select v-model="checkStatus" @on-change="changeSearch" style="width:150px">
+                <Select v-model="checkStatus" style="width:150px">
                     <Option v-for="item in stateArr" :value="item.key" :key="item.key">{{ item.name }}</Option>
                 </Select>
             </div>
@@ -18,10 +18,10 @@
                 <span>核销时间:</span>
                 <DatePicker type="datetimerange" @on-change="changeCheck"  format="yyyy-MM-dd HH:mm:ss" placeholder="选择核销时间" style="width: 250px;margin-right: 20px;"></DatePicker>
                 <span>经销商</span>
-                <Select v-model="distributeId" @on-change="changeSearch" style="width:150px;margin-right: 40px;">
+                <Select v-model="distributeId" style="width:150px;margin-right: 40px;">
                     <Option v-for="item in disRole" :value="item.id" :key="item.id">{{ item.name }}</Option>
                 </Select>
-                <Button type="primary" @click="getData">查询</Button>
+                <Button type="primary" @click="getData()">查询</Button>
             </div>
         </div>
         <div class="inner">
@@ -89,14 +89,7 @@
                             3: '已退款'
                         }
                         let text = stateConfig[params.row.checkStatus]
-                        return h('div', [
-                             h('Button', {
-                                props: {
-                                    type: 'text',
-                                    size: 'small'
-                                }
-                            }, text)
-                        ]);
+                        return h('div', text);
                     }
                 }, {
                     title: '一级经销商',
@@ -127,9 +120,9 @@
                 this.disRole = this.disRole.concat(disData.content)
                 console.log(this.disRole)
             },
-            async getData () {
+            async getData (page) {
                 let param = {
-                    page: this.page,
+                    page: page || 0,
                     orderNo: this.orderNo,
                     checkStatus: this.checkStatus,
                     distributeId: this.distributeId
@@ -145,21 +138,18 @@
                 
                 let data = await list(param)
                 
-
+                this.page = page || 0
                 this.tableData = data.data.data.content
                 this.total = data.data.data.totalElements
                 this.loading = true
                 
             },
-            changeSearch() {
-                this.page = 0
-            },
             changeOrder(date) {
-                this.page = 0
+              
                 this.orderDate = date
             },
             changeCheck(date) {
-                this.page = 0
+   
                 this.checkDate = date
             },
             async remove (params) {
@@ -169,9 +159,10 @@
                 
             },
             jump (param) {
-                this.page = param - 1
+
+                let page = param - 1
                 this.loading = false
-                this.getData()
+                this.getData(page)
             },
             async addData () {
 
