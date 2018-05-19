@@ -59,7 +59,7 @@
     </div>
 </template>
 <script>
-    import { list } from '../../data/ticket'
+    import { list, add } from '../../data/ticket'
     import Loading from '../common/loading.vue';
 
     export default {
@@ -160,7 +160,26 @@
                 this.getData()
             },
             async addData () {
-
+                let data = await add(this.add)
+                if(data.data.retCode != 0) {
+                    this.$Message.error(data.data.retMsg);
+                }
+                else {
+                    this.$Message.success('添加成功');
+                    this.getData()
+                }
+                this.add =  {
+                    productGroup: '',
+                    productCode: '',
+                    productName: '',
+                    profile: '',
+                    feature: '',
+                    content: '',
+                    marketPrice: '',
+                    salePrice: '',
+                    descript1: ''
+                }
+                this.getData()
             }
         },
         components: {

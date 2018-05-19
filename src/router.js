@@ -2,6 +2,7 @@ import List from './app/list/index.vue'
 import Checker from './app/checker/index.vue'
 import Order from './app/order/index.vue' 
 import TicketBase from './app/ticket/index.vue'
+import TicketPrice from './app/ticket-price/index.vue'
 import Person from './app/person/index.vue'
 export default {
     mode: 'hash',//history|hash
@@ -27,7 +28,7 @@ export default {
         },
         {
             path: '/ticketprice',
-            component: List
+            component: TicketPrice
         },
         {
             path: '/person',
