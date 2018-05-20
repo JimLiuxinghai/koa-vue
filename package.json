@@ -20,6 +20,7 @@
     "ejs": "^2.5.6 ",
     "gulp": "^3.9.1",
     "gulp-sftp": "^0.1.5",
+    "highcharts": "^5.0.15",
     "html-webpack-plugin": "^2.24.0",
     "iview": "^2.13.1",
     "koa": "^2.0.0",
@@ -42,6 +43,7 @@
     "serve-favicon": "^2.3.2",
     "style-loader": "^0.13.1",
     "vue": "^2.0.1",
+    "vue-highcharts": "0.0.10",
     "vue-resource": "^1.0.3",
     "vue-router": "^2.0.3"
   },

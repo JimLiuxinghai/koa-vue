@@ -31,28 +31,16 @@
                     <Input v-model="add.productName" placeholder="票务编码" style="width: 200px"></Input>
                 </div>
                 <div class="item">
-                    <span>简介:</span>
-                    <Input v-model="add.profile" placeholder="简介" style="width: 200px"></Input>
-                </div>
-                <div class="item">
-                    <span>特色:</span>
-                    <Input v-model="add.feature" placeholder="特色" style="width: 200px"></Input>
-                </div>
-                <div class="item">
-                    <span>内容:</span>
-                    <Input v-model="add.content" placeholder="内容" style="width: 200px"></Input>
-                </div>
-                <div class="item">
-                    <span>marketPrice:</span>
-                    <Input v-model="add.marketPrice" placeholder="marketPrice" style="width: 200px"></Input>
-                </div>
-                <div class="item">
-                    <span>salePrice:</span>
+                    <span>价格:</span>
                     <Input v-model="add.salePrice" placeholder="salePrice" style="width: 200px"></Input>
                 </div>
                 <div class="item">
-                    <span>附加描述:</span>
-                    <Input v-model="add.descript1" placeholder="附加描述" style="width: 200px"></Input>
+                    <span>预定须知:</span>
+                    <Input v-model="add.payNotice" placeholder="预定须知" style="width: 200px"></Input>
+                </div>
+                <div class="item">
+                    <span>使用说明:</span>
+                    <Input v-model="add.descript1" placeholder="使用说明" style="width: 200px"></Input>
                 </div>
             </div>
         </Modal>
@@ -125,7 +113,7 @@
                     productName: '',
                     profile: '',
                     feature: '',
-                    content: '',
+                    payNotice: '',
                     marketPrice: '',
                     salePrice: '',
                     descript1: ''
@@ -172,9 +160,7 @@
                     productGroup: '',
                     productCode: '',
                     productName: '',
-                    profile: '',
-                    feature: '',
-                    content: '',
+                    payNotice: '',
                     marketPrice: '',
                     salePrice: '',
                     descript1: ''

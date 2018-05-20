@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import vueResource from 'vue-resource';
 import iView from 'iview'
+import VueHighcharts from 'vue-highcharts';
 import 'iview/dist/styles/iview.css'
 import './assets/css/common.less'
 import './assets/css/link.less'

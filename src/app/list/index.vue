@@ -246,6 +246,7 @@
                 if(!isDown) {
                    this.loading = true
                    this.tableData = data.content 
+                   console.log(this.tableData)
                 }
                 else {
                     this.list = data.content
