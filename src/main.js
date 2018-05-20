@@ -10,6 +10,7 @@ Vue.config.debug = true;
 
 Vue.use(VueRouter);
 Vue.use(vueResource);
+Vue.use(VueHighcharts);
 Vue.use(iView);
 
 //无比关键

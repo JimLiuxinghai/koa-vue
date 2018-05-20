@@ -9,7 +9,7 @@
              <Button type="info" @click="modal = true">添加验票员</Button>
         </div>
         <div class="inner">
-            
+            <highcharts :options="chartOptions" ref="highcharts"></highcharts>
         </div>
     </div>
 </template>
@@ -29,77 +29,10 @@
                 tableData: [],
                 total: 0,
                 page: 0,
-                columns: [{
-                    title: '编号',
-                    key: 'id'
-                }, {
-                    title: '账号',
-                    key: 'username'
-                }, {
-                   title: '状态',
-                   key: 'enable',
-                   render: (h, params) => {
-                       let enable = params.row.enable
-                       let text = ''
-                       if(enable == 0) {
-                            text = '未激活'
-                       }
-                       else if(enable == 1) {
-                            text = '已激活'
-                       }
-                       else if(enbale == 2) {
-                            text = '已删除'
-                       }
-                       return h('div', [
-                           h('div', {
-                               props: {
-                                   type: 'text',
-                                   size: 'small'
-                               }
-                           }, text)
-                       ]);
-                   }
-                },{
-                    title: '操作',
-                    key: 'action',
-                    width: 150,
-                    align: 'center',
-                    render: (h, params) => {
-                        return h('div', [
-                            // h('Button', {
-                            //     props: {
-                            //         type: 'primary',
-                            //         size: 'small'
-                            //     },
-                            //     style: {
-                            //         marginRight: '5px'
-                            //     },
-                            //     on: {
-                            //         click: () => {
-                            //             this.edit(params)
-                            //         }
-                            //     }
-                            // }, '修改'),
-                            h('Button', {
-                                props: {
-                                    type: 'error',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.remove(params)
-                                    }
-                                }
-                            }, '删除')
-                        ]);
-                    }
-                }],
-                add: {
-                    username: '',
-                    password: '',
-                    enable: 1
-                },
-                modal: false    
+                hourData: [],
+                cityData: [],
+                chartOptions: {}
+
             }
         },
         methods: {
@@ -112,56 +45,75 @@
                 let data = await hour(param)
                 let cityData = await city(param)
                 console.log(data,cityData, '****')
+                if(data.retCode == 0 && cityData.retCode == 0) {
+                    this.dealData(data.data, cityData.data)
+                }
+                else {
+                    alert('暂无数据')
+                }
                 this.loading = true
                 // this.tableData = data.content
                 // this.total = data.totalElements
                 
             },
-            jump (param) {
-                this.page = param - 1
-                this.loading = false
-                this.getData()
-            },
-            cancel() {
-                this.add = {
-                    username: '',
-                    password: '',
-                    enable: 1
+            dealData(hourData, cityData) {
+                let hourArr = []
+                for(let i = 1; i <= 24; i++ ) {
+                    let newData = {
+                        hour: i,
+                        count: 0
+                    }
+                    hourData.forEach((item) => {
+                        if(i == parseInt(item.hour)) {
+                            newData = {
+                                hour: i,
+                                count: item.count
+                            }
+                        }
+                    })
+                    hourArr.push(newData)
                 }
+
+                this.init_charts(hourArr)
             },
-            async addData () {
-                let param = this.add
-                let data = await add(param)
+            init_charts(data, callback){
                 
-                if(data.data.retCode != 0) {
-                    this.$Message.error(data.data.retMsg);
-                }
-                else {
-                    this.$Message.success('添加成功');
-                    this.getData()
-                }
-                this.add = {
-                    username: '',
-                    password: '',
-                    enable: 1
-                }
-            },
-            async edit(params) {
+                let xData = []
+                let yData = []
 
-            },
-            async remove (params) {
-                let config = {
-                    checkId: params.row.id
-                }
+                data.forEach((item) => {
+                    xData.push(item.hour)
+                    yData.push(item.count)
+                })
+              this.chartOptions = {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: '销售量小时分布'
+                },
+        
+                xAxis: {
+                    categories: xData,
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '售票数'
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: '小时销售量',
+                    data: yData
+                }]
+              };
 
-                let data = await del(config)
-                if(data.data.retCode != 0) {
-                    this.$Message.error(data.data.retMsg);
-                }
-                else {
-                    this.$Message.success('删除成功');
-                    this.getData()
-                }
             }
         },
         components: {
