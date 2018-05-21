@@ -50,22 +50,22 @@
                 data: [],
                 dateParam: [{
                     key: 1,
-                    name: '下单日期'
+                    name: '核销日期'
                 }, {
                     key: 2,
-                    name: '核销日期'
+                    name: '下单日期'
                 }],
                 AmtParam: [{
                     key: 1,
-                    name: '销售额'
+                    name: '提成金额'
                 }, {
                     key: 2,
-                    name: '提成金额'
+                    name: '销售额'
                 }],
                 columns: [{
-                    title: '日期',
+                    title: '日期/经销商名称',
                     key: 'name',
-                    width: 100,
+                    width: 160,
                     fixed: 'left'
                 }],
                 param: {
@@ -83,6 +83,7 @@
                 let data = await list(param)
                 let disData = await distributor()
                 this.dis = disData.content
+                this.tableData = []
                 if(data.data.retCode == 0) {
                   this.data = data.data.data
                   this.dealData()  
@@ -127,6 +128,12 @@
             },
             dealData() {
                 if(this.data.tableRows) {
+                    this.columns = [{
+                        title: '日期/经销商名称',
+                        key: 'name',
+                        width: 160,
+                        fixed: 'left'
+                    }]
                     this.data.tableRows.forEach((date) => {
                         this.columns.push({
                             title: date,
@@ -145,7 +152,7 @@
                         })
                         tableData.push(newData)
                     })
-                    
+                    this.tableData = []
                     this.tableData = tableData 
                     this.loading = true
                 }

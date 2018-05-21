@@ -9,7 +9,7 @@ export async function list (ctx, config = {}) {
 		let config = {
 			url: '/prd/queryFinanceTableInfo?loginId=' + id,
 			data: {
-				distributeId: query.distributeId,
+				distributeId: query.distributeId || null,
 				year: query.year,
 				month: query.month,
 				queryAmtType: query.queryAmtType,
