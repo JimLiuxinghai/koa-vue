@@ -4,9 +4,9 @@
 <template>
     <div class="checker">
         <div class="top" style="padding-left: 30px;">
-             <Input v-model="username" placeholder="用户名" style="width: 300px"></Input>
+            <!--  <Input v-model="username" placeholder="用户名" style="width: 300px"></Input>
              <Button type="primary" @click="getData">查询</Button>
-             <Button type="info" @click="modal = true">添加验票员</Button>
+             <Button type="info" @click="modal = true">添加验票员</Button> -->
         </div>
         <div class="inner">
             <highcharts :options="chartOptions" ref="highcharts"></highcharts>
