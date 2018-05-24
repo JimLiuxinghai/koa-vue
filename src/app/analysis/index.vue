@@ -6,10 +6,10 @@
         <div class="top" style="padding-left: 30px;">
             <span>月份:</span>
             <DatePicker  v-model="date"  @on-change="changeMon" type="month" placeholder="选择月份" style="width: 200px;margin-right:30px;"></DatePicker>
-            <!-- <span>票种:</span>
+            <span>票种:</span>
             <Select v-model="param.productCode" style="width:200px;margin-right: 30px;">
                 <Option v-for="item in ticketData" :value="item.productCode" :key="item.productCode">{{ item.productName }}</Option>
-            </Select> -->
+            </Select>
             <Button type="primary" @click="getData()">查询</Button>
         </div>
         <div class="inner">
