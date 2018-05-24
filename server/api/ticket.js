@@ -9,8 +9,8 @@ export async function list (ctx, config = {}) {
 		let config = {
 			url: '/prd/getProducts/001?loginId=' + id,
 			data: {
-				pageSize: 10,
-				pageIndex: query.page
+				pageSize: query.pageSize || 10,
+				pageIndex: query.page || 0
 			}
 		}
 		let data = await request(ctx, config)

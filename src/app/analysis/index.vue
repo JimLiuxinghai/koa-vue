@@ -5,7 +5,12 @@
     <div class="checker">
         <div class="top" style="padding-left: 30px;">
             <span>月份:</span>
-            <DatePicker  v-model="date"  @on-change="changeMon" type="month" placeholder="选择月份" style="width: 200px"></DatePicker>
+            <DatePicker  v-model="date"  @on-change="changeMon" type="month" placeholder="选择月份" style="width: 200px;margin-right:30px;"></DatePicker>
+            <!-- <span>票种:</span>
+            <Select v-model="param.productCode" style="width:200px;margin-right: 30px;">
+                <Option v-for="item in ticketData" :value="item.productCode" :key="item.productCode">{{ item.productName }}</Option>
+            </Select> -->
+            <Button type="primary" @click="getData()">查询</Button>
         </div>
         <div class="inner">
             <highcharts :options="chartOptions" ref="highcharts"></highcharts>
@@ -21,6 +26,8 @@
     export default {
         beforeMount () {
             this.date = this.getDate(new Date(), 'yyyy-MM')
+            this.changeMon(this.date)
+            this.getTickets()
             this.getData();
 
         },
@@ -32,6 +39,7 @@
                 total: 0,
                 page: 0,
                 date: '',
+                ticketData: [],
                 hourData: [],
                 cityData: [],
                 chartOptions: {},
@@ -45,17 +53,10 @@
         },
         methods: {
             async getData () {
-                let newDate = this.date.split('-')
-                this.param.year = newDate[0]
-                this.param.month = newDate[1]
-                let param = {
-                    "year":"2018",
-                    "month":"4",
-                    "productCode":null
-                }
+                let param = this.param
                 let data = await hour(param)
                 let cityData = await city(param)
-                console.log(data,cityData, '****')
+                
                 if(data.retCode == 0 && cityData.retCode == 0) {
                     this.dealData(data.data, cityData.data)
                 }
@@ -66,6 +67,13 @@
                 // this.tableData = data.content
                 // this.total = data.totalElements
                 
+            },
+            async getTickets () {
+                let data = await list({
+                    pageSize: 1000
+                })
+                this.ticketData = data.content
+                console.log(data)
             },
             changeMon(date) {
                 
