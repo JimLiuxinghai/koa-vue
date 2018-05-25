@@ -48,7 +48,7 @@
                 </div>
                 <div class="item">
                     <span>分成:</span>
-                    <Input v-model="add.rate" placeholder="请输入分成" style="width: 300px"></Input>%
+                    <Input v-model="add.rate" placeholder="请输入分成" style="width: 300px"></Input>
                 </div>
              </div>
          </Modal>
@@ -83,11 +83,8 @@
                     title: '分销商等级',
                     key: 'controller'
                 }, {
-                    title: '分销商分成比例',
-                    key: 'rate',
-                    render: (h, params) => {
-                        return h('div', params.row.rate + '%')
-                    }
+                    title: '分销商分成',
+                    key: 'rate'
                 }, {
                     title: '状态',
                     key: 'enable',
@@ -135,14 +132,15 @@
                         ]);
                     }
                 },{
-                    title: '下级经销商',
-                    key: 'down',
+                    title: '操作',
+                    key: 'action',
+                    width: 350,
                     align: 'center',
                     render: (h, params) => {
                         let distrRole = params.row.distrRole
+                        let downEdit = null
                         if(distrRole !== 12) {
-                            return h('div', [
-                                h('Button', {
+                            downEdit = h('Button', {
                                     props: {
                                         type: 'primary',
                                         size: 'small'
@@ -151,28 +149,25 @@
                                         click: () => {
                                             this.down(params)
                                         }
+                                    },
+                                    style: {
+                                        marginRight: '5px'
                                     }
                                 }, '查看下级经销商')
-                            ]);
                         }
                         else {
-                            return h('div', [
-                                h('Button', {
+                            downEdit =  h('Button', {
                                     props: {
                                         type: 'text',
                                         size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
                                     }
                                 }, '无')
-                            ]);
                         }
-                    }
-                }, {
-                    title: '操作',
-                    key: 'action',
-                    width: 150,
-                    align: 'center',
-                    render: (h, params) => {
                         return h('div', [
+                            downEdit,
                             // h('Button', {
                             //     props: {
                             //         type: 'primary',

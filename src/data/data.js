@@ -38,3 +38,10 @@ export async function city(config) {
 	let data = await axios.get('/api/base/city', { params: config })
 	return data.data.data.data
 }
+
+//修改密码
+export async function eidtPass(config) {
+	let data = await axios.get('/api/base/pass', { params: config })
+	return data.data
+}
+

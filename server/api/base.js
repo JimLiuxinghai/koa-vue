@@ -238,6 +238,33 @@ export async function city (ctx, config = {}) {
 	}
 }
 
+export async function editPass (ctx, config = {}) {
+	try {
+		let query = ctx.query
+		let user =  ctx.session.user
+		console.log(user)
+		let id = ctx.session.id
+		let config = {
+			url: `/actions/distri/chgPwd?loginId=${id}`,
+			data: {
+				id: ctx.session.id,
+				username: user.phone,
+				oldPwd: query.old,
+				newPwd: query.newPass
+			}
+		}
+		let data = await request(ctx, config)
+		let ok = util.errorModal('ERR_OK')
+		ok.data = data.data
+		ctx.body = ok
+	}
+	catch (e) {
+		console.log(e)
+		let ok = util.errorModal('ERR_SYSTEM_ERROR')
+		ctx.body = ok
+	}
+}
+
 module.exports = {
     'get /': menu,
     'get /roles': roles,
@@ -247,7 +274,8 @@ module.exports = {
     'post /actdis': actdis,
     'post /addChecker': addChecker,
     'get /ercode': ercode,
-    'get /city': city
+    'get /city': city,
+    'get /pass': editPass
 }
 
 

@@ -1,4 +1,5 @@
 import { request } from '../service/request'
+import fs from 'fs'
 /*
  * @param hasUv: true  //是否需要uv信息
 */
@@ -80,6 +81,9 @@ export async function city (ctx, config = {}) {
 		ctx.body = ok
 	}
 }
+
+
+
 
 module.exports = {
     'get /': list,
