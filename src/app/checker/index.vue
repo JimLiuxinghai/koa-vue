@@ -19,8 +19,12 @@
             @on-cancel="cancel">
             <div class="add">
                 <div class="item">
-                    <span>用户名:</span>
-                    <Input v-model="add.username" placeholder="用户名" style="width: 300px"></Input>
+                    <span>账号:</span>
+                    <Input v-model="add.username" placeholder="账号" style="width: 300px"></Input>
+                </div>
+                <div class="item">
+                    <span>姓名:</span>
+                    <Input v-model="add.name" placeholder="姓名" style="width: 300px"></Input>
                 </div>
                 <div class="item">
                     <span>密码:</span>
@@ -52,6 +56,9 @@
                     title: '账号',
                     key: 'username'
                 }, {
+                    title: '姓名',
+                    key: 'name'
+                },{
                    title: '状态',
                    key: 'enable',
                    render: (h, params) => {
@@ -139,6 +146,7 @@
                 this.add = {
                     username: '',
                     password: '',
+                    name: '',
                     enable: 1
                 }
             },

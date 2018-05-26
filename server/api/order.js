@@ -18,6 +18,7 @@ export async function list (ctx, config = {}) {
 				condition: {
 					orderNo: query.orderNo,
 					distributeId: query.distributeId || null,
+					checkerId: query.checkerId || '',
 					orderBegDate: query.orderBegDate || '',
 					orderEndDate: query.orderEndDate || '',
 					checkStatus: query.checkStatus,

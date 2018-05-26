@@ -8,8 +8,12 @@
                 <span>订单号:</span>
                 <Input v-model="orderNo" placeholder="订单号" style="width: 150px; margin-right: 40px;"></Input>
                 <span>核销状态:</span>
-                <Select v-model="checkStatus" style="width:150px">
+                <Select v-model="checkStatus" style="width:150px;margin-right: 40px;">
                     <Option v-for="item in stateArr" :value="item.key" :key="item.key">{{ item.name }}</Option>
+                </Select>
+                <span>核验员:</span>
+                <Select v-model="checkerId" style="width:150px">
+                    <Option v-for="item in checkerArr" :value="item.id" :key="item.id">{{ item.name }}</Option>
                 </Select>
             </div>
             <div class="second">
@@ -31,13 +35,14 @@
     </div>
 </template>
 <script>
-    import { list } from '../../data/order'
+    import { list, checkerList } from '../../data/order'
     import { distributor } from '../../data/data'
 
     export default {
         beforeMount () {
             this.getData();
             this.getDis();
+            this.getChecker()
         },
         data () {
             return {
@@ -47,6 +52,8 @@
                 orderDate: [],
                 checkDate: [],
                 disRole: [],
+                checkerArr: [],
+                checkerId: '',
                 stateArr: [{
                     key: '1',
                     name: '待验证'
@@ -92,6 +99,9 @@
                         return h('div', text);
                     }
                 }, {
+                    title: '核验员',
+                    key: 'checker'
+                },{
                     title: '一级经销商',
                     key: 'distrName1'
                 },{
@@ -125,7 +135,8 @@
                     page: page || 0,
                     orderNo: this.orderNo,
                     checkStatus: this.checkStatus,
-                    distributeId: this.distributeId
+                    distributeId: this.distributeId,
+                    checkerId: this.checkerId
                 }
                 if(this.orderDate.length) {
                     param.orderBegDate = this.orderDate[0]
@@ -143,6 +154,14 @@
                 this.total = data.data.data.totalElements
                 this.loading = true
                 
+            },
+            async getChecker() {
+                let checkerData = await checkerList({
+                    username: '',
+                    page: 0
+                })
+                this.checkerArr = checkerData.content
+               
             },
             changeOrder(date) {
               
