@@ -26,7 +26,8 @@
              </div>
         </div>
         <div class="inner">
-            <Table height="500" :loading="!loading" stripe border :columns="columns" :data="tableData"></Table>
+            <Table height="500" :loading="!loading" stripe border :columns="columns" :data="tableData" ref="table"></Table>
+            <Button type="primary" size="large" @click="exportData()"><Icon type="ios-download-outline"></Icon>导出数据</Button>
         </div>
     </div>
 </template>
@@ -161,6 +162,11 @@
                     this.$Message.success('暂无数据');
                 }
                 
+            },
+            exportData() {
+                this.$refs.table.exportCsv({
+                    filename: '财务月报'
+                });
             }
         },
         components: {
