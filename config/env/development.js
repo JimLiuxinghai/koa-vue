@@ -1,9 +1,9 @@
 export default {
     port: 9058,
-    host: 'http://123.206.63.144:7998',
+    host: 'https://www.zhongguohanyuan.com/',
     db: {
     	mysql: {
-    		database: 'market_db',
+    		database: 'market_product',
     		user: 'root',
     		password: '6yhn6yhn',
     		port: '63453',
