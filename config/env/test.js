@@ -1,6 +1,7 @@
 export default {
     port: 9059,
     host: 'http://123.206.63.144:7998',
+    merchantCode: '001',
     db: {
       mysql: {
         database: 'market_db',

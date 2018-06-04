@@ -101,6 +101,7 @@ export async function addSec (ctx, config = {}) {
 	try {
 		let query = ctx.request.body
 		let id = ctx.session.id
+		query.productInfo.merchantCode = ENV_CONFIG.merchantCode
 		let config = {
 			url: '/prd/secKill/create?loginId=' + id,
 			data: query
