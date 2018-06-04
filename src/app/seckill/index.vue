@@ -17,12 +17,6 @@
             @on-cancel="modal = false">
             <div class="add">
                 <div class="item">
-                    <span>票务类型</span>
-                    <Select v-model="add.type" style="width:200px">
-                        <Option v-for="item in ticketType" :value="item.name" :key="item.key">{{ item.name }}</Option>
-                    </Select>
-                </div>
-                <div class="item">
                     <span>票务验证类型:</span>
                     <Select v-model="add.productGroup" style="width:200px">
                         <Option v-for="item in product" :value="item.name" :key="item.key">{{ item.name }}</Option>
@@ -47,24 +41,6 @@
                 <div class="item">
                     <span>使用说明:</span>
                     <Input v-model="add.descript1" placeholder="使用说明" style="width: 200px"></Input>
-                </div>
-                <div v-if="add.type == 'seckill'">
-                    <div class="item">
-                        <span>秒杀票数量</span>
-                        <Input v-model="kill.ticketLimitCnt" placeholder="秒杀票数量" style="width: 200px"></Input>
-                    </div>
-                    <div class="item">
-                        <span>秒杀票价</span>
-                        <Input v-model="kill.amount" placeholder="秒杀票价" style="width: 200px"></Input>
-                    </div>
-                    <div class="item">
-                        <span>秒杀票生效时间</span>
-                        <DatePicker type="datetimerange" @on-change="changeEx"  format="yyyy-MM-dd hh:mm:ss" placeholder="秒杀票生效时间" style="width: 250px;"></DatePicker>
-                    </div>
-                    <div class="item">
-                        <span>秒杀票展示时间</span>
-                        <DatePicker type="datetimerange" @on-change="changeDis"  format="yyyy-MM-dd hh:mm:ss" placeholder="秒杀票展示时间" style="width: 250px;"></DatePicker>
-                    </div>
                 </div>
             </div>
         </Modal>
@@ -120,17 +96,18 @@
                             1: '是'
                         }
                         let text = stateConfig[params.row.isRefund]
-                        return h('div', {
-                            props: {
-                                type: 'text',
-                                size: 'small'
-                            }
-                        }, text);
+                        return h('div', [
+                             h('Button', {
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                }
+                            }, text)
+                        ]);
                     } 
                 }],
                 page: 0,
                 add: {
-                    type: '',
                     productGroup: '',
                     productCode: '',
                     productName: '',
@@ -141,14 +118,6 @@
                     salePrice: '',
                     descript1: ''
                 },
-                kill: {
-                    ticketLimitCnt: '',
-                    amount: '',
-                    effectTimeS: '',
-                    expireTimeS: '',
-                    displayBegTimeS: '',
-                    displayEndTimeS: ''
-                },
                 product: [{
                     key: 'date',
                     name: '精确日期验证'
@@ -158,13 +127,6 @@
                 }, {
                     key: 'price',
                     name: '当日价格验证'
-                }],
-                ticketType: [{
-                    key: 'normal',
-                    name: '普通票'
-                }, {
-                    key: 'seckill',
-                    name: '秒杀票'
                 }]     
             }
         },
@@ -174,7 +136,7 @@
                     page: this.page
                 }
                 let data = await list(param)
-                
+                console.log(data)
                 this.loading = true
                 this.tableData = data.content
                 this.total = data.totalElements
@@ -204,14 +166,6 @@
                     descript1: ''
                 }
                 this.getData()
-            },
-            changeEx (date) {
-                this.kill.effectTimeS = date[0]
-                this.kill.expireTimeS = date[1]
-            },
-            changeDis (date) {
-                this.kill.displayBegTimeS = date[0]
-                this.kill.displayEndTimeS = date[1]
             }
         },
         components: {

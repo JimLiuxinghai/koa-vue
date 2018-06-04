@@ -43,6 +43,10 @@ export default {
             component: Analysis
         },
         {
+            path: '/seckill',
+            
+        },
+        {
             path: '*', 
             redirect: '/order'
         },
