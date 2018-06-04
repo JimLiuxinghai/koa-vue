@@ -18,8 +18,8 @@
             <div class="add">
                 <div class="item">
                     <span>票务类型</span>
-                    <Select v-model="add.type" style="width:200px">
-                        <Option v-for="item in ticketType" :value="item.name" :key="item.key">{{ item.name }}</Option>
+                    <Select v-model="type" style="width:200px" @on-change="">
+                        <Option v-for="item in ticketType" :value="item.key" :key="item.key">{{ item.name }}</Option>
                     </Select>
                 </div>
                 <div class="item">
@@ -34,7 +34,7 @@
                 </div>
                 <div class="item">
                     <span>票务名称:</span>
-                    <Input v-model="add.productName" placeholder="票务编码" style="width: 200px"></Input>
+                    <Input v-model="add.productName" placeholder="票务名称" style="width: 200px"></Input>
                 </div>
                 <div class="item">
                     <span>价格:</span>
@@ -48,7 +48,7 @@
                     <span>使用说明:</span>
                     <Input v-model="add.descript1" placeholder="使用说明" style="width: 200px"></Input>
                 </div>
-                <div v-if="add.type == 'seckill'">
+                <div v-if="type == 'seckill'">
                     <div class="item">
                         <span>秒杀票数量</span>
                         <Input v-model="kill.ticketLimitCnt" placeholder="秒杀票数量" style="width: 200px"></Input>
@@ -84,6 +84,7 @@
                 loading: false,
                 tableData: [],
                 total: 0,
+                type: '',
                 columns: [{
                     title: '编号',
                     key: 'productCode'

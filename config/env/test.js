@@ -1,6 +1,6 @@
 export default {
     port: 9059,
-    host: 'http://123.206.63.144:7998',
+    host: 'https://we.mwwae.top',
     merchantCode: '001',
     db: {
       mysql: {
