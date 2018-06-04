@@ -71,7 +71,7 @@
     </div>
 </template>
 <script>
-    import { list, add } from '../../data/ticket'
+    import { list, add, addSec, detail } from '../../data/ticket'
     import Loading from '../common/loading.vue';
 
     export default {
@@ -186,24 +186,56 @@
                 this.getData()
             },
             async addData () {
-                let data = await add(this.add)
-                if(data.data.retCode != 0) {
-                    this.$Message.error(data.data.retMsg);
+                if(add.type == 'normal') {
+                    let data = await add(this.add)
+                    if(data.data.retCode != 0) {
+                        this.$Message.error(data.data.retMsg);
+                    }
+                    else {
+                        this.$Message.success('添加成功');
+                        this.getData()
+                    }
+                    this.add =  {
+                        productGroup: '',
+                        productCode: '',
+                        productName: '',
+                        payNotice: '',
+                        marketPrice: '',
+                        salePrice: '',
+                        descript1: ''
+                    }
                 }
                 else {
-                    this.$Message.success('添加成功');
-                    this.getData()
+                    let param = {
+                        productInfo: this.add,
+                        prdCmpnLimitInfo: this.kill
+                    }
+                    let data = await addSec(param)
+                    if(data.data.retCode != 0) {
+                        this.$Message.error(data.data.retMsg);
+                    }
+                    else {
+                        this.$Message.success('添加成功');
+                        this.getData()
+                    }
+                    this.add =  {
+                        productGroup: '',
+                        productCode: '',
+                        productName: '',
+                        payNotice: '',
+                        marketPrice: '',
+                        salePrice: '',
+                        descript1: ''
+                    }
+                    this.kill = {
+                        ticketLimitCnt: '',
+                        amount: '',
+                        effectTimeS: '',
+                        expireTimeS: '',
+                        displayBegTimeS: '',
+                        displayEndTimeS: ''
+                    }
                 }
-                this.add =  {
-                    productGroup: '',
-                    productCode: '',
-                    productName: '',
-                    payNotice: '',
-                    marketPrice: '',
-                    salePrice: '',
-                    descript1: ''
-                }
-                this.getData()
             },
             changeEx (date) {
                 this.kill.effectTimeS = date[0]

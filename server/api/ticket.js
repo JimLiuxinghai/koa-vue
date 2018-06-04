@@ -97,12 +97,56 @@ export async function addTime (ctx, config = {}) {
 	}
 }
 
+export async function addSec (ctx, config = {}) {
+	try {
+		let query = ctx.request.body
+		let id = ctx.session.id
+		let config = {
+			url: '/prd/secKill/create?loginId=' + id,
+			data: query
+		}
+		let data = await request(ctx, config)
+		
+		let ok = util.errorModal('ERR_OK')
+		ok.data = data.data
+		ctx.body = ok
+	}
+	catch (e) {
+		console.log(e)
+		let ok = util.errorModal('ERR_SYSTEM_ERROR')
+		ctx.body = ok
+	}
+}
+
+export async function getSecDetail (ctx, config = {}) {
+	try {
+		let query = ctx.query
+		let id = ctx.session.id
+		let config = {
+			url: `/prd/secKill/query/${query.productCode}?loginId=${id}`
+		}
+		let data = await request(ctx, config)
+		
+		let ok = util.errorModal('ERR_OK')
+		ok.data = data.data
+		ctx.body = ok
+	}
+	catch (e) {
+		console.log(e)
+		let ok = util.errorModal('ERR_SYSTEM_ERROR')
+		ctx.body = ok
+	}
+}
+
+
 
 module.exports = {
     'get /': list,
     'post /': add,
     'get /time': time,
-    'post /time': addTime
+    'post /time': addTime,
+    'post /addsec': addSec,
+    'get /secDetail': getSecDetail
 }
 
 
