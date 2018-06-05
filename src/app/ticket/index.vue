@@ -128,6 +128,24 @@
                             }
                         }, text);
                     } 
+                }, {
+                    title: '详情',
+                    key: 'detail',
+                    render: (h, params) => {
+                        return h('div', [
+                             h('Button', {
+                                props: {
+                                    type: 'primary',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.getDetail(params)
+                                    }
+                                }
+                            }, '详情')
+                        ]);
+                    }
                 }],
                 page: 0,
                 add: {
@@ -245,6 +263,9 @@
             changeDis (date) {
                 this.kill.displayBegTimeS = date[0]
                 this.kill.displayEndTimeS = date[1]
+            },
+            getDetail (params) {
+                console.log(params)
             }
         },
         components: {
