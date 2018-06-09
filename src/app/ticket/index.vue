@@ -25,7 +25,7 @@
                 <div class="item">
                     <span>票务验证类型:</span>
                     <Select v-model="add.productGroup" style="width:200px">
-                        <Option v-for="item in product" :value="item.name" :key="item.key">{{ item.name }}</Option>
+                        <Option v-for="item in product" :value="item.key" :key="item.key">{{ item.name }}</Option>
                     </Select>
                 </div>
                 <div class="item">
@@ -205,7 +205,8 @@
                 this.getData()
             },
             async addData () {
-                if(add.type == 'normal') {
+                
+                if(this.type == 'normal') {
                     let data = await add(this.add)
                     if(data.data.retCode != 0) {
                         this.$Message.error(data.data.retMsg);

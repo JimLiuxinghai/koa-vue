@@ -40,6 +40,7 @@ export async function add (ctx, config = {}) {
 			data: {
 				username: query.username,
 				password: query.password,
+				name: query.name,
 				enable: 1
 			}
 		}

@@ -29,9 +29,12 @@ export async function list (ctx, config = {}) {
 export async function add (ctx, config = {}) {
 	try {
 		let query = ctx.request.body
+		query.merchantCode = ENV_CONFIG.merchantCode
+		query.enable = 1
+		query.isRefund = 1
 		let id = ctx.session.id
 		let config = {
-			url: '/prd/saveProduct',
+			url: '/prd/saveProduct?loginId=' + id,
 			data: query
 		}
 		let data = await request(ctx, config)
